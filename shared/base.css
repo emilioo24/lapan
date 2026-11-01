@@ -1,0 +1,161 @@
+/* ─────────────────────────────────────────────────────────────
+   Lapan · base compartida (va después de tokens.css)
+   ───────────────────────────────────────────────────────────── */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-tinta);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  img { max-width: 100%; height: auto; }
+  main { overflow-x: clip; }
+
+  /* Foco visible y bien contrastado en fondos claros y oscuros */
+  :focus-visible {
+    outline: 3px solid var(--foco, var(--color-loza));
+    outline-offset: 3px;
+    border-radius: 8px;
+  }
+  .sobre-oscuro { --foco: var(--color-dorado); }
+
+  .saltar-al-contenido {
+    position: absolute; left: 1rem; top: -4rem; z-index: 100;
+    background: var(--color-dorado); color: var(--color-tinta);
+    padding: .75rem 1rem; border-radius: 12px; font-weight: 700;
+    transition: top .2s;
+  }
+  .saltar-al-contenido:focus { top: 1rem; }
+}
+
+@layer components {
+  /* ── Botones ─────────────────────────────── */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
+    min-height: 3rem; padding: .8rem 1.4rem;
+    border-radius: 999px; font-weight: 700; line-height: 1.1;
+    transition: transform .25s var(--ease-rebote), box-shadow .25s, background-color .2s, color .2s;
+    will-change: transform;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn:active { transform: translateY(0) scale(.98); }
+  .btn svg { width: 1.15em; height: 1.15em; flex: none; }
+  .btn .flecha { transition: transform .25s var(--ease-suave); }
+  .btn:hover .flecha { transform: translateX(4px); }
+
+  .btn-dorado { background: var(--color-dorado); color: var(--color-tinta); box-shadow: 0 6px 0 -2px #a8885a; }
+  .btn-dorado:hover { box-shadow: 0 9px 0 -2px #a8885a; }
+  .btn-salvia { background: var(--color-salvia); color: var(--color-oliva-2); box-shadow: 0 6px 0 -2px #9fb184; }
+  .btn-salvia:hover { box-shadow: 0 9px 0 -2px #9fb184; }
+  .btn-oliva { background: var(--color-oliva); color: #fff; box-shadow: 0 6px 0 -2px var(--color-oliva-2); }
+  .btn-oliva:hover { box-shadow: 0 9px 0 -2px var(--color-oliva-2); }
+  .btn-papel { background: var(--color-papel); color: #A11D4C; box-shadow: 0 6px 0 -2px #9e1f4c; }
+  .btn-papel:hover { box-shadow: 0 9px 0 -2px #9e1f4c; }
+  .btn-borde { border: 2px solid currentColor; }
+
+  /* ── Insignias / chips ───────────────────── */
+  .chip {
+    display: inline-flex; align-items: center; gap: .45rem;
+    padding: .5rem .95rem; border-radius: 999px;
+    font-weight: 500; font-size: .95rem; line-height: 1.2;
+  }
+  .chip svg { width: 1.05em; height: 1.05em; flex: none; }
+
+  /* ── Sobretítulo ─────────────────────────── */
+  .sobretitulo {
+    display: inline-flex; align-items: center; gap: .6rem;
+    font-weight: 700; font-size: clamp(.7rem, 2.9vw, .8rem); letter-spacing: .13em; text-transform: uppercase;
+  }
+  .sobretitulo::before {
+    content: ""; width: 1.6rem; height: 2px; background: currentColor; border-radius: 2px;
+  }
+
+  /* ── Guarda tipo azulejo de loza ─────────── */
+  .guarda {
+    height: 32px;
+    background-repeat: repeat-x;
+    background-size: auto 32px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='32' viewBox='0 0 56 32'%3E%3Crect width='56' height='32' fill='%23FFFBF4'/%3E%3Cpath d='M0 1.5h56M0 30.5h56' stroke='%231F4E9C' stroke-width='3'/%3E%3Cpath d='M28 6l10 10-10 10-10-10z' fill='none' stroke='%231F4E9C' stroke-width='2.4'/%3E%3Cpath d='M28 11l5 5-5 5-5-5z' fill='%231F4E9C'/%3E%3Cpath d='M0 6c7 3 7 17 0 20M56 6c-7 3-7 17 0 20' fill='none' stroke='%231F4E9C' stroke-width='2.4'/%3E%3Ccircle cx='10' cy='16' r='2.8' fill='%23D6336C'/%3E%3Ccircle cx='46' cy='16' r='2.8' fill='%23D6336C'/%3E%3Ccircle cx='28' cy='16' r='1.4' fill='%23FFFBF4'/%3E%3C/svg%3E");
+    animation: guarda-corre 40s linear infinite;
+    animation-play-state: paused;
+  }
+  .guarda.is-visible { animation-play-state: running; }
+  .guarda-oliva {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='32' viewBox='0 0 56 32'%3E%3Crect width='56' height='32' fill='%23F6F3EA'/%3E%3Cpath d='M0 1.5h56M0 30.5h56' stroke='%2355602F' stroke-width='3'/%3E%3Cpath d='M28 6l10 10-10 10-10-10z' fill='none' stroke='%2355602F' stroke-width='2.4'/%3E%3Cpath d='M28 11l5 5-5 5-5-5z' fill='%2355602F'/%3E%3Cpath d='M0 6c7 3 7 17 0 20M56 6c-7 3-7 17 0 20' fill='none' stroke='%2355602F' stroke-width='2.4'/%3E%3Ccircle cx='10' cy='16' r='2.8' fill='%23D6336C'/%3E%3Ccircle cx='46' cy='16' r='2.8' fill='%23D6336C'/%3E%3Ccircle cx='28' cy='16' r='1.4' fill='%23F6F3EA'/%3E%3C/svg%3E");
+  }
+
+  /* ── Foto con borde redondeado ───────────── */
+  .foto { border-radius: var(--radius-card); overflow: hidden; }
+  .foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* ── Bloque de color cuando falta la foto ── */
+  .sin-foto {
+    position: relative; overflow: hidden;
+    display: grid; place-items: center;
+  }
+  .sin-foto > svg.icono-sin-foto { width: 34%; max-width: 7rem; height: auto; opacity: .9; }
+
+  /* ── Cinta que corre (marquee) ───────────── */
+  .cinta { overflow: hidden; white-space: nowrap; }
+  .cinta-pista { display: inline-flex; animation: cinta 38s linear infinite; }
+  .cinta:hover .cinta-pista { animation-play-state: paused; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Animaciones de entrada al hacer scroll
+   Solo se ocultan si hay JS (html.js) y si no se pidió reducir movimiento.
+   ───────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+    transition: opacity .8s var(--ease-suave), transform .9s var(--ease-suave);
+    transition-delay: calc(var(--i, 0) * 90ms);
+  }
+  html.js [data-reveal="izq"] { transform: translate3d(-36px, 0, 0); }
+  html.js [data-reveal="der"] { transform: translate3d(36px, 0, 0); }
+  html.js [data-reveal="zoom"] { transform: scale(.92); }
+  html.js [data-reveal="giro"] { transform: translate3d(0, 30px, 0) rotate(-4deg) scale(.95); }
+  html.js [data-reveal].is-visible { opacity: 1; transform: none; }
+}
+
+@keyframes guarda-corre { to { background-position: -560px 0; } }
+@keyframes cinta { to { transform: translateX(-50%); } }
+@keyframes girar { to { transform: rotate(360deg); } }
+@keyframes latido {
+  0%, 82%, 100% { transform: scale(1); }
+  88% { transform: scale(1.12); }
+  94% { transform: scale(.97); }
+}
+@keyframes onda {
+  0% { transform: scale(1); opacity: .55; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+@keyframes flotar {
+  0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+  50% { transform: translateY(-8px) rotate(var(--rot, 0deg)); }
+}
+
+/* Movimiento reducido: se apaga todo lo que se mueve solo */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+  .cinta-pista { animation: none !important; }
+}

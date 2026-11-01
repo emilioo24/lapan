@@ -1,0 +1,30 @@
+/* ─────────────────────────────────────────────────────────────
+   Lapan · tokens de diseño (Tailwind v4)
+   Las fuentes se cargan desde Google Fonts en el <head> de cada layout.
+   ───────────────────────────────────────────────────────────── */
+
+@theme {
+  /* Restaurante */
+  --color-grafito: #1F2227;
+  --color-grafito-2: #2A2E35;
+  --color-dorado: #D4B07A;
+  --color-crema: #F7F1E6;
+  --color-papel: #FFFBF4;
+  --color-fucsia: #D6336C;
+  --color-loza: #1F4E9C;
+  --color-turquesa: #2A9D8F;
+  --color-tinta: #24262B;
+
+  /* Almacén */
+  --color-salvia: #CDDCB5;
+  --color-oliva: #55602F;
+  --color-oliva-2: #3E4722;
+  --color-crema-alm: #F6F3EA;
+
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-sans: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --radius-card: 22px;
+  --ease-suave: cubic-bezier(.22, .8, .24, 1);
+  --ease-rebote: cubic-bezier(.34, 1.56, .64, 1);
+}

@@ -1,0 +1,18 @@
+---
+// Cinta que corre con lo que más destacan las reseñas y el Instagram.
+const items = [
+  'Croissants', 'Pavlova', 'Pan de queso', 'Pan de semillas', 'Scones',
+  'Tortilla guaraní (mbeyú)', 'Alfajores', 'Cookies', 'Cheesecake de frutos rojos', 'Tostados',
+];
+const fila = [...items, ...items];
+---
+<div class="cinta border-y-2 border-tinta/10 bg-dorado py-3.5 text-tinta" role="region" aria-label="Lo que más piden">
+  <ul class="sr-only">{items.map((t) => <li>{t}</li>)}</ul>
+  <div class="cinta-pista" aria-hidden="true">
+    {fila.map((t, i) => (
+      <span class="inline-flex shrink-0 items-center gap-5 px-5 whitespace-nowrap font-display text-xl font-semibold italic sm:text-2xl">
+        {t}<span class={`inline-block size-2.5 rounded-full ${['bg-fucsia','bg-loza','bg-turquesa'][i % 3]}`}></span>
+      </span>
+    ))}
+  </div>
+</div>

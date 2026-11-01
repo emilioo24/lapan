@@ -1,0 +1,86 @@
+---
+import Icono from '../../../../shared/components/Icono.astro';
+import Foto from '../../../../shared/components/Foto.astro';
+import { ALMACEN_BASE, asset } from '../../../../shared/config.mjs';
+import { ALMACEN } from '../../../../shared/negocio.mjs';
+
+const palabras = ['Lo', 'bueno', 'de', 'Lapan,', 'directo'];
+---
+<section class="relative overflow-hidden bg-salvia pt-24 pb-16 sm:pt-28 lg:pt-32 lg:pb-24">
+  <img src={asset(ALMACEN_BASE, 'img/lapan-simbolo-oliva.svg')} alt="" aria-hidden="true"
+       class="garabato pointer-events-none absolute -bottom-24 -left-20 w-[24rem] max-w-none opacity-[.1] lg:w-[32rem]" />
+
+  <div class="relative mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:px-8">
+    <div>
+      <p class="sobretitulo entra text-oliva" style="--i:0">Almacén · Panadería · Granel</p>
+      <h1 class="mt-5 text-[2.6rem] leading-[1.03] font-extrabold text-oliva-2 sm:text-6xl lg:text-[4.2rem]">
+        {palabras.map((p, i) => <><span class="palabra" style={`--i:${i + 1}`}>{p}</span>{' '}</>)}
+        <span class="palabra" style="--i:6">a</span>{' '}
+        <span class="palabra italic text-oliva" style="--i:7">tu mesa.</span>
+      </h1>
+      <p class="entra mt-6 max-w-xl text-lg leading-relaxed text-oliva-2 sm:text-xl" style="--i:9">
+        Panes sin gluten, hierbas y hebras a granel, huevos de gallinas libres y elaborados caseros.
+        Pedís por WhatsApp y te lo llevamos a tu casa.
+      </p>
+      <div class="entra mt-8 flex flex-col gap-3 sm:flex-row" style="--i:10">
+        <a href={ALMACEN.whatsapp.url} target="_blank" rel="noopener" class="btn btn-oliva"><Icono nombre="whatsapp" /> Pedí por WhatsApp</a>
+        <a href="#productos" class="btn btn-borde text-oliva-2 hover:bg-oliva-2 hover:text-salvia">Ver productos <Icono nombre="flecha" class="flecha rotate-90" /></a>
+      </div>
+      <ul class="entra mt-8 flex flex-wrap gap-2.5" style="--i:11" aria-label="Lo que ofrecemos">
+        <li class="chip bg-crema-alm text-oliva-2 ring-1 ring-oliva/20"><span aria-hidden="true">🛵</span> Delivery Lun a Sáb</li>
+        <li class="chip bg-crema-alm text-oliva-2 ring-1 ring-oliva/20"><span aria-hidden="true">🌾</span> Opciones sin gluten</li>
+        <li class="chip bg-crema-alm text-oliva-2 ring-1 ring-oliva/20"><span aria-hidden="true">🌱</span> Productos naturales</li>
+      </ul>
+    </div>
+
+    <div class="mosaico mx-auto grid w-full max-w-[34rem] grid-cols-2 grid-rows-2 gap-3 sm:gap-4" data-parallax="0.05">
+      <figure class="pieza row-span-2 m-0" style="--i:0">
+        <Foto base={ALMACEN_BASE} nombre="pan-dulce-pistacho" eager sizes="(min-width:1024px) 270px, 48vw"
+              alt="Panes dulces con glaseado de pistacho y trozos de chocolate blanco" class="h-full w-full object-cover" />
+      </figure>
+      <figure class="pieza m-0 aspect-square" style="--i:1">
+        <Foto base={ALMACEN_BASE} nombre="roscas" sizes="(min-width:1024px) 270px, 48vw" posicion="70% 30%"
+              alt="Roscas caseras con crema, pistacho y coco" class="h-full w-full object-cover" />
+      </figure>
+      <figure class="pieza m-0 aspect-square" style="--i:2">
+        <Foto base={ALMACEN_BASE} nombre="box-rosca" sizes="(min-width:1024px) 270px, 48vw" posicion="50% 70%"
+              alt="Rosca con crema y pistacho junto a una caja kraft con moño dorado" class="h-full w-full object-cover" />
+      </figure>
+      <span class="sello-alm" aria-hidden="true">hecho<br />acá</span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .palabra { display: inline-block; }
+  @media (prefers-reduced-motion: no-preference) {
+    .palabra { animation: palabra .8s var(--ease-suave) backwards; animation-delay: calc(var(--i) * 70ms + 150ms); }
+    .entra { animation: sube .9s var(--ease-suave) backwards; animation-delay: calc(var(--i) * 70ms + 150ms); }
+    .pieza { animation: pieza 1s var(--ease-rebote) backwards; animation-delay: calc(var(--i) * 150ms + 300ms); }
+    .sello-alm { animation: sello 1s var(--ease-rebote) 1s backwards, flotar 5s ease-in-out 2s infinite; }
+    .garabato { animation: girar 70s linear infinite; }
+  }
+  @keyframes palabra { from { opacity: 0; transform: translateY(.55em) rotate(4deg); filter: blur(6px); } }
+  @keyframes sube { from { opacity: 0; transform: translateY(18px); } }
+  @keyframes pieza { from { opacity: 0; transform: scale(.85) translateY(30px); } }
+  @keyframes sello { from { opacity: 0; transform: scale(.3) rotate(-60deg); } }
+
+  .mosaico { position: relative; transform: translateY(var(--py, 0)); aspect-ratio: 1 / 1; }
+  .pieza {
+    overflow: hidden; border-radius: 22px; background: var(--color-crema-alm);
+    border: 6px solid #fff; box-shadow: 0 22px 44px -20px rgba(62,71,34,.55);
+    transition: transform .5s var(--ease-rebote);
+  }
+  .pieza img { transition: transform .8s var(--ease-suave); }
+  @media (hover: hover) {
+    .pieza:hover { transform: rotate(-1.5deg) scale(1.03); }
+    .pieza:hover img { transform: scale(1.08); }
+  }
+  .sello-alm {
+    position: absolute; left: 50%; top: 50%; translate: -50% -50%;
+    width: 6.5rem; aspect-ratio: 1; border-radius: 999px; display: grid; place-items: center; text-align: center;
+    background: var(--color-oliva); color: #fff; border: 4px solid var(--color-salvia);
+    font: 800 italic 1.2rem/.95 var(--font-display); --rot: -8deg; transform: rotate(-8deg);
+    box-shadow: 0 12px 26px -10px rgba(62,71,34,.6);
+  }
+</style>

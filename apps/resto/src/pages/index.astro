@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import Cinta from '../components/Cinta.astro';
+import Momentos from '../components/Momentos.astro';
+import Vitrina from '../components/Vitrina.astro';
+import Boxes from '../components/Boxes.astro';
+import PetFriendly from '../components/PetFriendly.astro';
+import BannerAlmacen from '../components/BannerAlmacen.astro';
+import Resenas from '../components/Resenas.astro';
+import Visitanos from '../components/Visitanos.astro';
+import Footer from '../components/Footer.astro';
+import Guarda from '../../../../shared/components/Guarda.astro';
+import WhatsAppFlotante from '../../../../shared/components/WhatsAppFlotante.astro';
+import { RESTO } from '../../../../shared/negocio.mjs';
+---
+<Base
+  titulo="Lapan · Restaurante, cafetería y panadería en Paraná"
+  descripcion="Desayunos, brunch, almuerzos, cenas, panes y dulces en San Lorenzo 9, Paraná. De martes a domingo de 8 a 00 h, de corrido. Pet friendly, con jardín y boxes para regalar."
+>
+  <Navbar />
+  <main id="contenido">
+    <Hero />
+    <Cinta />
+    <Momentos />
+    <Guarda />
+    <Vitrina />
+    <Boxes />
+    <PetFriendly />
+    <BannerAlmacen />
+    <Resenas />
+    <Visitanos />
+  </main>
+  <Guarda />
+  <Footer />
+  <WhatsAppFlotante url={RESTO.whatsapp.url} etiqueta="Escribinos por WhatsApp" />
+</Base>

@@ -1,0 +1,40 @@
+---
+import { asset } from '../config.mjs';
+
+interface Props {
+  base: string;
+  origen: string;     // ej: https://lapan.com.ar
+  titulo: string;
+  descripcion: string;
+  imagen: string;     // ruta dentro de /public, ej: img/og-resto.jpg
+  colorTema: string;
+}
+const { base, origen, titulo, descripcion, imagen, colorTema } = Astro.props;
+const url = origen + base;
+const og = origen + asset(base, imagen);
+const favicon = asset(base, 'img/lapan-simbolo-circulo-salvia.svg');
+---
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>{titulo}</title>
+<meta name="description" content={descripcion} />
+<link rel="canonical" href={url} />
+<meta name="theme-color" content={colorTema} />
+<link rel="icon" type="image/svg+xml" href={favicon} />
+
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="es_AR" />
+<meta property="og:site_name" content="Lapan" />
+<meta property="og:title" content={titulo} />
+<meta property="og:description" content={descripcion} />
+<meta property="og:url" content={url} />
+<meta property="og:image" content={og} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,800;1,9..144,600;1,9..144,800&display=swap" />
+
+<script is:inline>document.documentElement.classList.add('js');</script>

@@ -1,0 +1,77 @@
+---
+import Icono from '../../../../shared/components/Icono.astro';
+import Foto from '../../../../shared/components/Foto.astro';
+import SinFoto from '../../../../shared/components/SinFoto.astro';
+import { RESTO_BASE } from '../../../../shared/config.mjs';
+
+// TODO: confirmar con el cliente los horarios de cada momento (el local abre de 8 a 00 h de corrido).
+const momentos = [
+  { titulo: 'Desayunos', icono: 'cafe', horario: 'Desde las 8 h',
+    texto: 'Café, croissants, scones y pan de queso para arrancar el día con todo.',
+    foto: 'croissant-frutos-rojos', alt: 'Croissant glaseado con frutos rojos en un plato de loza azul y blanca' },
+  { titulo: 'Brunch', icono: 'sol', horario: 'Mañana y mediodía',
+    texto: 'Huevo, palta, tostados y panes de la casa, sin mirar el reloj.',
+    foto: 'brunch-huevo-palta', alt: 'Plato de brunch con huevo frito, palta y tomates cherry' },
+  { titulo: 'Almuerzos', icono: 'cubiertos', horario: 'Al mediodía',
+    texto: 'Platos caseros para cortar la semana, con opciones vegetarianas y veganas.',
+    sinFoto: { fondo: '#D9E3F3', tinta: '#1F4E9C' } },
+  { titulo: 'Meriendas', icono: 'galleta', horario: 'Por la tarde',
+    texto: 'Cookies, alfajores, mbeyú y algo rico para compartir en el jardín.',
+    foto: 'cookie-chocolate-frambuesa', alt: 'Cookie de avena con chocolate y frambuesas en un platito blanco' },
+  { titulo: 'Cenas', icono: 'copa', horario: 'Hasta las 00 h',
+    texto: 'Para cerrar el día con algo rico y una copa de vino o una cerveza.',
+    sinFoto: { fondo: '#F6D9E3', tinta: '#A11D4C' } },
+  { titulo: 'Dulces', icono: 'torta', horario: 'Todo el día',
+    texto: 'Pavlova, cheesecake de frutos rojos y una vitrina que siempre tienta.',
+    foto: 'pavlova', alt: 'Pavlova con frutillas, frambuesas y arándanos en plato de loza' },
+];
+---
+<section id="carta" class="relative bg-crema py-20 sm:py-24" aria-labelledby="titulo-carta">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl" data-reveal>
+      <p class="sobretitulo text-loza">Nuestra carta</p>
+      <h2 id="titulo-carta" class="mt-3 text-4xl font-extrabold text-tinta sm:text-5xl">
+        Un Lapan para <em class="text-fucsia">cada</em> momento
+      </h2>
+      <p class="mt-4 text-lg text-tinta/80">
+        Desde el primer café de la mañana hasta la última copa de la noche. Elegí tu momento y vení.
+      </p>
+    </div>
+
+    <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-stagger>
+      {momentos.map((m) => (
+        <li data-reveal class="h-full">
+          <article class="tarjeta group h-full overflow-hidden rounded-[22px] bg-papel shadow-[0_2px_0_rgba(36,38,43,.06),0_18px_40px_-24px_rgba(36,38,43,.35)] ring-1 ring-tinta/5" data-tilt>
+            <div class="relative aspect-[4/3] overflow-hidden">
+              {m.foto
+                ? <Foto base={RESTO_BASE} nombre={m.foto} alt={m.alt!} sizes="(min-width:1024px) 400px, (min-width:640px) 50vw, 92vw"
+                        class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]" />
+                : <SinFoto base={RESTO_BASE} icono={m.icono} fondo={m.sinFoto!.fondo} tinta={m.sinFoto!.tinta}
+                           etiqueta={`${m.titulo} (foto a confirmar)`} class="h-full w-full" />}
+              <span class="chip absolute top-3 left-3 bg-papel/95 !py-1.5 text-sm font-bold text-tinta shadow-sm backdrop-blur">
+                <Icono nombre="reloj" class="text-loza" /> {m.horario}
+              </span>
+            </div>
+            <div class="flex items-start gap-4 p-6">
+              <span class="grid size-11 shrink-0 place-items-center rounded-2xl bg-crema text-loza transition-transform duration-500 group-hover:-rotate-12">
+                <Icono nombre={m.icono} class="size-5" />
+              </span>
+              <div>
+                <h3 class="text-2xl font-semibold text-tinta">{m.titulo}</h3>
+                <p class="mt-1.5 leading-relaxed text-tinta/75">{m.texto}</p>
+              </div>
+            </div>
+          </article>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .tarjeta {
+    transform: perspective(900px) rotateX(var(--rx, 0)) rotateY(var(--ry, 0));
+    transition: transform .4s var(--ease-suave), box-shadow .4s;
+  }
+  .tarjeta:hover { box-shadow: 0 2px 0 rgba(36,38,43,.06), 0 30px 50px -24px rgba(36,38,43,.45); }
+</style>

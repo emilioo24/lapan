@@ -1,0 +1,115 @@
+---
+import Icono from '../../../../shared/components/Icono.astro';
+import { RESTO_BASE, ALMACEN_URL, asset } from '../../../../shared/config.mjs';
+import { RESTO } from '../../../../shared/negocio.mjs';
+
+const links = [
+  { href: '#carta', texto: 'Carta' },
+  { href: '#vitrina', texto: 'Panes y dulces' },
+  { href: '#boxes', texto: 'Boxes' },
+  { href: '#pet-friendly', texto: 'Pet friendly' },
+  { href: '#visitanos', texto: 'Visitanos' },
+];
+---
+<header id="nav" class="sobre-oscuro fixed inset-x-0 top-0 z-50 bg-grafito/95 text-crema backdrop-blur-md transition-[box-shadow,padding] duration-300">
+  <nav class="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8" aria-label="Principal">
+    <a href={RESTO_BASE} class="logo mr-auto shrink-0" aria-label="Lapan, inicio">
+      <img src={asset(RESTO_BASE, 'img/lapan-logo-dorado.svg')} alt="Lapan" width="122" height="45" class="h-10 w-auto sm:h-11" />
+    </a>
+
+    <ul class="hidden items-center gap-1 lg:flex">
+      {links.map((l) => (
+        <li><a href={l.href} class="nav-link rounded-full px-3 py-2 font-medium text-crema/85 transition-colors hover:text-dorado">{l.texto}</a></li>
+      ))}
+    </ul>
+
+    <a href={RESTO.whatsapp.url} target="_blank" rel="noopener"
+       class="btn btn-borde hidden !min-h-11 !px-4 !py-2 text-dorado sm:inline-flex">
+      <Icono nombre="whatsapp" /> WhatsApp
+    </a>
+    <a href={ALMACEN_URL} class="btn btn-salvia hidden !min-h-11 !px-4 !py-2 md:inline-flex">
+      Pedí en el Almacén
+    </a>
+
+    <!-- Mobile -->
+    <a href={RESTO.whatsapp.url} target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp"
+       class="grid size-11 place-items-center rounded-full text-dorado ring-2 ring-dorado/60 sm:hidden">
+      <Icono nombre="whatsapp" class="size-5" />
+    </a>
+    <button id="menu-btn" type="button" aria-expanded="false" aria-controls="menu-movil" aria-label="Abrir menú"
+            class="grid size-11 place-items-center rounded-full bg-grafito-2 text-crema lg:hidden">
+      <span class="hamburguesa" aria-hidden="true"><span></span><span></span><span></span></span>
+    </button>
+  </nav>
+
+  <div id="menu-movil" class="menu-movil lg:hidden" hidden>
+    <ul class="flex flex-col gap-1 px-4 pt-2 pb-4 sm:px-6">
+      {links.map((l, i) => (
+        <li style={`--i:${i}`}>
+          <a href={l.href} class="flex items-center justify-between rounded-2xl px-4 py-3.5 font-display text-2xl font-semibold text-crema hover:bg-grafito-2">
+            {l.texto}<Icono nombre="flecha" class="size-5 text-dorado" />
+          </a>
+        </li>
+      ))}
+      <li style="--i:5" class="mt-3 grid gap-3 sm:grid-cols-2">
+        <a href={RESTO.whatsapp.url} target="_blank" rel="noopener" class="btn btn-dorado w-full"><Icono nombre="whatsapp" /> Escribinos por WhatsApp</a>
+        <a href={ALMACEN_URL} class="btn btn-salvia w-full">Pedí en el Almacén <Icono nombre="flecha" class="flecha" /></a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<style>
+  #nav.scrolled { box-shadow: 0 10px 30px -12px rgba(0,0,0,.55); }
+  #nav.scrolled nav { padding-top: .5rem; padding-bottom: .5rem; }
+  nav { transition: padding .3s var(--ease-suave); }
+
+  .nav-link { position: relative; }
+  .nav-link::after {
+    content: ""; position: absolute; left: .75rem; right: .75rem; bottom: .3rem; height: 2px;
+    background: var(--color-dorado); border-radius: 2px;
+    transform: scaleX(0); transform-origin: left; transition: transform .3s var(--ease-suave);
+  }
+  .nav-link:hover::after, .nav-link.activo::after { transform: scaleX(1); }
+  .nav-link.activo { color: var(--color-dorado); }
+
+  .hamburguesa { display: grid; gap: 5px; width: 20px; }
+  .hamburguesa span { height: 2px; background: currentColor; border-radius: 2px; transition: transform .3s var(--ease-suave), opacity .2s; }
+  [aria-expanded="true"] .hamburguesa span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  [aria-expanded="true"] .hamburguesa span:nth-child(2) { opacity: 0; }
+  [aria-expanded="true"] .hamburguesa span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .menu-movil { max-height: calc(100dvh - 4.5rem); overflow-y: auto; border-top: 1px solid rgb(255 255 255 / .08); }
+  .menu-movil li { animation: entra-item .45s var(--ease-suave) both; animation-delay: calc(var(--i) * 50ms); }
+  @keyframes entra-item { from { opacity: 0; transform: translateY(-8px); } }
+</style>
+
+<script>
+  const nav = document.getElementById('nav')!;
+  const btn = document.getElementById('menu-btn')!;
+  const menu = document.getElementById('menu-movil')!;
+
+  const onScroll = () => nav.classList.toggle('scrolled', scrollY > 10);
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  const cerrar = () => { menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); btn.setAttribute('aria-label', 'Abrir menú'); };
+  btn.addEventListener('click', () => {
+    const abrir = menu.hidden;
+    menu.hidden = !abrir;
+    btn.setAttribute('aria-expanded', String(abrir));
+    btn.setAttribute('aria-label', abrir ? 'Cerrar menú' : 'Abrir menú');
+  });
+  menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', cerrar));
+  addEventListener('keydown', (e) => { if (e.key === 'Escape' && !menu.hidden) { cerrar(); btn.focus(); } });
+
+  // Link activo según la sección visible
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('.nav-link')];
+  const secciones = links.map((l) => document.querySelector(l.getAttribute('href')!)).filter(Boolean) as Element[];
+  const io = new IntersectionObserver((ents) => {
+    for (const e of ents) if (e.isIntersecting) {
+      links.forEach((l) => l.classList.toggle('activo', l.getAttribute('href') === '#' + e.target.id));
+    }
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  secciones.forEach((s) => io.observe(s));
+</script>

@@ -1,0 +1,120 @@
+---
+import Icono from '../../../../shared/components/Icono.astro';
+import { RESTO, ALMACEN } from '../../../../shared/negocio.mjs';
+
+const servicios = ['Take away y delivery', 'Vino y cerveza', 'Opciones vegetarianas y veganas', 'Pet friendly', 'Wi-Fi gratis', 'Accesible'];
+---
+<section id="visitanos" class="relative bg-crema py-20 sm:py-24" aria-labelledby="titulo-visitanos">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl" data-reveal>
+      <p class="sobretitulo text-loza">Visitanos</p>
+      <h2 id="titulo-visitanos" class="mt-3 text-4xl font-extrabold text-tinta sm:text-5xl">
+        Te esperamos en <em class="text-loza">San Lorenzo 9</em>
+      </h2>
+    </div>
+
+    <div class="mt-12 grid gap-6 lg:grid-cols-[1fr_1.15fr]">
+      <div class="grid gap-5" data-stagger>
+        <!-- Dirección + horario -->
+        <article data-reveal class="rounded-[22px] bg-papel p-6 ring-1 ring-tinta/5 sm:p-7">
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex gap-4">
+              <span class="grid size-11 shrink-0 place-items-center rounded-2xl bg-loza text-white"><Icono nombre="pin" class="size-5" /></span>
+              <div>
+                <h3 class="font-sans text-sm font-bold tracking-wider text-tinta/70 uppercase">Dirección</h3>
+                <p class="mt-1 text-lg font-medium text-tinta">{RESTO.direccion}</p>
+              </div>
+            </div>
+          </div>
+          <div class="mt-6 flex gap-4">
+            <span class="grid size-11 shrink-0 place-items-center rounded-2xl bg-loza text-white"><Icono nombre="reloj" class="size-5" /></span>
+            <div>
+              <h3 class="flex flex-wrap items-center gap-2 font-sans text-sm font-bold tracking-wider text-tinta/70 uppercase">
+                Horarios
+                <span id="estado-abierto" class="estado hidden rounded-full px-2.5 py-0.5 text-xs tracking-normal normal-case" aria-live="polite"></span>
+              </h3>
+              <p class="mt-1 text-lg font-medium text-tinta">{RESTO.horario.largo}</p>
+              <p class="text-tinta/75">{RESTO.horario.invierno}. {RESTO.horario.cerrado}.</p>
+              <p class="mt-2 text-tinta/75">Precio: {RESTO.precio.toLowerCase()}.</p>
+            </div>
+          </div>
+          <a href={RESTO.mapsUrl} target="_blank" rel="noopener" class="btn btn-dorado mt-7 w-full sm:w-auto">
+            <Icono nombre="pin" /> Cómo llegar
+          </a>
+        </article>
+
+        <!-- Contacto -->
+        <article data-reveal class="rounded-[22px] bg-papel p-6 ring-1 ring-tinta/5 sm:p-7">
+          <h3 class="font-sans text-sm font-bold tracking-wider text-tinta/70 uppercase">Contacto</h3>
+          <ul class="mt-4 grid gap-3">
+            <li>
+              <a href={RESTO.whatsapp.url} target="_blank" rel="noopener" class="contacto">
+                <span class="grid size-10 place-items-center rounded-xl bg-[#25D366] text-[#0b3d1f]"><Icono nombre="whatsapp" class="size-5" /></span>
+                <span><strong class="block">WhatsApp</strong>{RESTO.whatsapp.numero}</span>
+              </a>
+            </li>
+            <li>
+              <a href={RESTO.instagram.url} target="_blank" rel="noopener" class="contacto">
+                <span class="grid size-10 place-items-center rounded-xl bg-fucsia text-white"><Icono nombre="instagram" class="size-5" /></span>
+                <span><strong class="block">{RESTO.instagram.usuario}</strong>Restaurante</span>
+              </a>
+            </li>
+            <li>
+              <a href={ALMACEN.instagram.url} target="_blank" rel="noopener" class="contacto">
+                <span class="grid size-10 place-items-center rounded-xl bg-oliva text-white"><Icono nombre="instagram" class="size-5" /></span>
+                <span><strong class="block">{ALMACEN.instagram.usuario}</strong>Almacén</span>
+              </a>
+            </li>
+          </ul>
+          <ul class="mt-6 flex flex-wrap gap-2" aria-label="Servicios">
+            {servicios.map((s) => <li class="chip bg-crema !py-1.5 text-sm text-tinta"><Icono nombre="check" class="text-[#1d6f66]" />{s}</li>)}
+          </ul>
+        </article>
+      </div>
+
+      <div class="mapa relative flex min-h-[22rem] overflow-hidden rounded-[22px] bg-papel p-2 ring-1 ring-tinta/5" data-reveal="der">
+        <iframe
+          src={RESTO.mapsEmbed}
+          title="Mapa: Lapan, San Lorenzo 9, Paraná"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          class="min-h-[22rem] w-full flex-1 rounded-[16px] border-0 bg-[#e8e4da]"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contacto {
+    display: flex; align-items: center; gap: .9rem; padding: .5rem; margin: -.5rem;
+    border-radius: 16px; color: var(--color-tinta); transition: background-color .2s;
+  }
+  .contacto:hover { background: var(--color-crema); }
+  .contacto > span:first-child { transition: transform .3s var(--ease-rebote); }
+  .contacto:hover > span:first-child { transform: rotate(-8deg) scale(1.08); }
+  .estado.abierto { background: #DDF1EE; color: #17615a; }
+  .estado.cerrado { background: #F6D9E3; color: #A11D4C; }
+  .estado::before { content: ""; display: inline-block; width: .5rem; height: .5rem; border-radius: 99px; background: currentColor; margin-right: .35rem; vertical-align: .05em; }
+  .estado.abierto::before { animation: onda-punto 1.6s ease-out infinite; }
+  @keyframes onda-punto { 0% { box-shadow: 0 0 0 0 currentColor; } 100% { box-shadow: 0 0 0 6px transparent; } }
+</style>
+
+<script>
+  // "Abierto ahora" en hora de Paraná (UTC-3).
+  // TODO: confirmar con el cliente en qué fechas rige el horario de invierno (acá: 21/6 al 21/9).
+  const el = document.getElementById('estado-abierto');
+  if (el) {
+    const ahora = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Argentina/Buenos_Aires' }));
+    const dia = ahora.getDay(); // 0 dom … 1 lun
+    const mmdd = (ahora.getMonth() + 1) * 100 + ahora.getDate();
+    const invierno = mmdd >= 621 && mmdd <= 921;
+    const hora = ahora.getHours() + ahora.getMinutes() / 60;
+    const cierre = invierno ? 23 : 24;
+    const abierto = dia !== 1 && hora >= 8 && hora < cierre;
+    el.textContent = abierto ? `Abierto ahora · hasta las ${invierno ? '23' : '00'} h` : 'Ahora cerrado';
+    el.classList.add(abierto ? 'abierto' : 'cerrado');
+    el.classList.remove('hidden');
+  }
+</script>

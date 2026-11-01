@@ -1,0 +1,6 @@
+---
+// Separador tipo azulejo de loza (azul loza + puntos fucsia).
+interface Props { variante?: 'loza' | 'oliva'; }
+const { variante = 'loza' } = Astro.props;
+---
+<div class:list={['guarda', { 'guarda-oliva': variante === 'oliva' }]} data-guarda aria-hidden="true"></div>

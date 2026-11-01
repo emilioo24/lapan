@@ -1,0 +1,83 @@
+# Publica los sitios en GitHub Pages.
+#
+# • Modo demo (por defecto): el restaurante en https://<usuario>.github.io/<repo>/
+#   y el almacén en https://<usuario>.github.io/<repo>/almacen/
+#
+# • Modo producción: crear la variable de repositorio SITE_MODE=production
+#   (Settings → Secrets and variables → Actions → Variables). Ver README.md.
+
+name: Deploy a GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      SITE_MODE: ${{ vars.SITE_MODE || 'demo' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Calcular la ruta base de la demo
+        id: base
+        run: |
+          REPO="${{ github.event.repository.name }}"
+          if [[ "$REPO" == *.github.io ]]; then echo "base=/" >> "$GITHUB_OUTPUT"; else echo "base=/$REPO/" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Build demo
+        if: env.SITE_MODE != 'production'
+        run: pnpm build:demo
+        env:
+          DEMO_BASE: ${{ steps.base.outputs.base }}
+          DEMO_ORIGIN: https://${{ github.repository_owner }}.github.io
+
+      - name: Build producción
+        if: env.SITE_MODE == 'production'
+        run: pnpm build:produccion
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ env.SITE_MODE == 'production' && 'dist/resto' || 'dist' }}
+
+      # Solo en producción: el almacén se publica en un segundo repositorio
+      # (GitHub Pages permite un sitio por repo) con el dominio almacen.lapan.com.ar.
+      - name: Publicar el almacén en su repositorio
+        if: env.SITE_MODE == 'production'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          personal_token: ${{ secrets.ALMACEN_TOKEN }}
+          external_repository: ${{ vars.ALMACEN_REPO }}
+          publish_branch: gh-pages
+          publish_dir: dist/almacen
+          cname: almacen.lapan.com.ar
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

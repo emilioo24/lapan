@@ -1,0 +1,59 @@
+---
+import Icono from '../../../../shared/components/Icono.astro';
+import { ALMACEN_BASE, RESTO_URL, asset } from '../../../../shared/config.mjs';
+import { ALMACEN, RESTO } from '../../../../shared/negocio.mjs';
+---
+<section id="horarios" class="bg-crema-alm py-20 sm:py-24" aria-labelledby="titulo-horarios">
+  <div class="mx-auto grid max-w-7xl gap-6 px-4 sm:px-6 lg:grid-cols-2 lg:px-8" data-stagger>
+    <article data-reveal class="rounded-[22px] bg-white p-7 ring-1 ring-oliva/10 sm:p-9">
+      <p class="sobretitulo text-oliva">Horarios y delivery</p>
+      <h2 id="titulo-horarios" class="mt-3 text-3xl font-extrabold text-oliva-2 sm:text-4xl">Cuándo encontrarnos</h2>
+      <!-- TODO: confirmar con el cliente la dirección del almacén para sumarla acá -->
+      <ul class="mt-7 grid gap-5">
+        <li class="flex gap-4">
+          <span class="grid size-11 shrink-0 place-items-center rounded-2xl bg-salvia text-oliva-2"><Icono nombre="tienda" class="size-5" /></span>
+          <div>
+            <h3 class="font-sans text-sm font-bold tracking-wider text-oliva-2/75 uppercase">Almacén</h3>
+            <p class="mt-1 text-lg font-medium text-oliva-2">{ALMACEN.horario.largo}</p>
+          </div>
+        </li>
+        <li class="flex gap-4">
+          <span class="grid size-11 shrink-0 place-items-center rounded-2xl bg-salvia text-oliva-2"><Icono nombre="moto" class="size-5" /></span>
+          <div>
+            <h3 class="font-sans text-sm font-bold tracking-wider text-oliva-2/75 uppercase">Delivery · lunes a sábado</h3>
+            <p class="mt-1 text-lg font-medium text-oliva-2">{ALMACEN.delivery}</p>
+          </div>
+        </li>
+        <li class="flex gap-4">
+          <span class="grid size-11 shrink-0 place-items-center rounded-2xl bg-salvia text-oliva-2"><Icono nombre="instagram" class="size-5" /></span>
+          <div>
+            <h3 class="font-sans text-sm font-bold tracking-wider text-oliva-2/75 uppercase">Instagram</h3>
+            <a href={ALMACEN.instagram.url} target="_blank" rel="noopener" class="mt-1 inline-block text-lg font-medium text-oliva underline decoration-oliva/40 underline-offset-4 hover:decoration-oliva">{ALMACEN.instagram.usuario}</a>
+          </div>
+        </li>
+      </ul>
+      <a href={ALMACEN.whatsapp.url} target="_blank" rel="noopener" class="btn btn-oliva mt-8"><Icono nombre="whatsapp" /> Hacer pedido</a>
+    </article>
+
+    <a data-reveal href={RESTO_URL} class="resto group sobre-oscuro relative flex flex-col justify-between overflow-hidden rounded-[22px] bg-grafito p-7 text-crema sm:p-9">
+      <img src={asset(ALMACEN_BASE, 'img/lapan-simbolo-dorado.svg')} alt="" aria-hidden="true"
+           class="simbolo pointer-events-none absolute -right-10 -bottom-16 w-72 opacity-[.08]" />
+      <div class="relative">
+        <img src={asset(ALMACEN_BASE, 'img/lapan-logo-dorado.svg')} alt="Lapan restaurante" width="130" height="48" class="h-12 w-auto" />
+        <p class="mt-8 font-display text-3xl leading-tight font-extrabold sm:text-4xl">
+          ¿Preferís sentarte a la mesa? <em class="text-dorado">Vení al restaurante.</em>
+        </p>
+        <p class="mt-4 text-crema/85">Desayunos, brunch, almuerzos, meriendas y cenas en {RESTO.direccion.split(',')[0]}. {RESTO.horario.corto}.</p>
+      </div>
+      <span class="btn btn-dorado relative mt-8 self-start">Ir al restaurante <Icono nombre="flecha" class="flecha" /></span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .resto { transition: transform .4s var(--ease-rebote); }
+  .resto:hover { transform: translateY(-4px); }
+  .resto:hover .btn .flecha { transform: translateX(4px); }
+  .simbolo { transition: transform 1.2s var(--ease-suave); }
+  .resto:hover .simbolo { transform: rotate(25deg) scale(1.1); }
+</style>

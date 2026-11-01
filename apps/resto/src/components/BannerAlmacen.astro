@@ -1,0 +1,58 @@
+---
+import Icono from '../../../../shared/components/Icono.astro';
+import { RESTO_BASE, ALMACEN_URL, asset } from '../../../../shared/config.mjs';
+import { ALMACEN } from '../../../../shared/negocio.mjs';
+
+const productos = [
+  { icono: 'trigo', texto: 'Panes sin gluten' },
+  { icono: 'torta', texto: 'Pan dulce sin gluten' },
+  { icono: 'hierbas', texto: 'Hierbas y hebras a granel' },
+  { icono: 'huevo', texto: 'Huevos de gallinas libres' },
+  { icono: 'canasta', texto: 'Tortas invertidas y torta galesa' },
+];
+---
+<section id="almacen" class="relative overflow-hidden bg-salvia py-20 text-oliva-2 [--foco:#3E4722] sm:py-24" aria-labelledby="titulo-almacen">
+  <img src={asset(RESTO_BASE, 'img/lapan-simbolo-oliva.svg')} alt="" aria-hidden="true"
+       class="garabato pointer-events-none absolute top-1/2 -right-24 w-[26rem] max-w-none -translate-y-1/2 opacity-[.13] sm:w-[34rem] lg:right-0 lg:w-[40rem]" />
+
+  <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl">
+      <div class="flex items-center gap-3" data-reveal>
+        <img src={asset(RESTO_BASE, 'img/lapan-logo-oliva.svg')} alt="Lapan" width="108" height="40" class="h-9 w-auto" />
+        <span class="rounded-full bg-oliva px-3 py-1 text-sm font-bold tracking-wide text-white">Almacén</span>
+      </div>
+
+      <h2 id="titulo-almacen" class="mt-6 text-4xl font-extrabold text-oliva-2 sm:text-6xl" data-reveal>
+        Lo de Lapan, <em>en tu casa</em>.
+      </h2>
+      <p class="mt-5 max-w-2xl text-lg leading-relaxed text-oliva-2" data-reveal>
+        En nuestro almacén encontrás panes y pan dulce sin gluten, hierbas y hebras a granel como el hibisco,
+        huevos de gallinas libres y elaborados caseros. Pedilos por WhatsApp y te los llevamos.
+      </p>
+
+      <ul class="mt-7 flex flex-wrap gap-2.5" data-stagger aria-label="Productos del almacén">
+        {productos.map((p) => (
+          <li data-reveal="zoom" class="chip bg-crema-alm/80 font-medium text-oliva-2 ring-1 ring-oliva/20">
+            <Icono nombre={p.icono} class="text-oliva" /> {p.texto}
+          </li>
+        ))}
+      </ul>
+
+      <div class="mt-10 flex flex-col items-start gap-5 sm:flex-row sm:items-center" data-reveal>
+        <a href={ALMACEN_URL} class="btn btn-oliva !min-h-16 !px-8 text-xl">
+          Pedí en el Almacén <Icono nombre="flecha" class="flecha" />
+        </a>
+        <p class="flex items-center gap-2.5 font-medium text-oliva-2">
+          <span class="grid size-10 place-items-center rounded-full bg-oliva text-white"><Icono nombre="moto" class="size-5" /></span>
+          <span>Delivery de lunes a sábado<br /><strong>{ALMACEN.delivery}</strong></span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    .garabato { animation: girar 60s linear infinite; }
+  }
+</style>

@@ -1,0 +1,79 @@
+---
+import Icono from '../../../../shared/components/Icono.astro';
+import Foto from '../../../../shared/components/Foto.astro';
+import { RESTO_BASE } from '../../../../shared/config.mjs';
+
+const items = [
+  { icono: 'pata', titulo: 'Perros bienvenidos', texto: 'Traelo, que acá también lo atendemos.' },
+  { icono: 'arboles', titulo: 'Mesas al aire libre', texto: 'Jardín para comer tranquilos y al sol.' },
+  { icono: 'accesible', titulo: 'Acceso para silla de ruedas', texto: 'Para que entremos todos sin problema.' },
+  { icono: 'wifi', titulo: 'Wi-Fi gratis', texto: 'Si venís a trabajar un rato, estás en tu casa.' },
+];
+---
+<section id="pet-friendly" class="relative overflow-hidden bg-crema py-20 sm:py-24" aria-labelledby="titulo-pet">
+  <!-- Huellitas que cruzan -->
+  <div class="huellas pointer-events-none absolute top-8 right-0 left-0 flex justify-center gap-6 sm:gap-10" data-stagger aria-hidden="true">
+    {Array.from({ length: 9 }).map((_, i) => (
+      <span data-reveal="zoom" class="huella-wrap text-turquesa/40">
+        <span class="huella block" style={`--off:${i % 2 ? 14 : -4}px`}><Icono nombre="pata" class="size-6 sm:size-7" /></span>
+      </span>
+    ))}
+  </div>
+
+  <div class="relative mx-auto grid max-w-7xl items-center gap-14 px-4 pt-6 sm:px-6 lg:grid-cols-[.9fr_1.1fr] lg:px-8">
+    <div class="relative mx-auto w-full max-w-md" data-reveal="izq">
+      <div class="foto-perro relative -rotate-2 rounded-[26px] bg-white p-2.5 shadow-[0_30px_60px_-24px_rgba(36,38,43,.45)]">
+        <Foto base={RESTO_BASE} nombre="perro-cumple" sizes="(min-width:1024px) 440px, 90vw"
+              alt="Perrito blanco con vestido violeta frente a dos tortas de cumpleaños, en una mesa del local"
+              class="aspect-square w-full rounded-[18px] object-cover" />
+      </div>
+      <span class="globito" aria-hidden="true">¡Guau!</span>
+    </div>
+
+    <div>
+      <p class="sobretitulo text-[#1d6f66]" data-reveal>Pet friendly</p>
+      <h2 id="titulo-pet" class="mt-3 text-4xl font-extrabold text-tinta sm:text-5xl" data-reveal>
+        Acá tu perro también es <em class="text-[#1d6f66]">cliente</em>.
+      </h2>
+      <p class="mt-4 max-w-xl text-lg text-tinta/80" data-reveal>
+        Vení con tu compañero de cuatro patas: hay jardín, sombra y mesas afuera para pasar la tarde juntos.
+      </p>
+
+      <ul class="mt-9 grid gap-4 sm:grid-cols-2" data-stagger>
+        {items.map((it) => (
+          <li data-reveal class="item flex gap-4 rounded-[20px] bg-papel p-5 ring-1 ring-tinta/5">
+            <span class="grid size-12 shrink-0 place-items-center rounded-2xl bg-turquesa text-white">
+              <Icono nombre={it.icono} class="size-6" />
+            </span>
+            <div>
+              <h3 class="font-sans text-lg font-bold text-tinta">{it.titulo}</h3>
+              <p class="mt-1 text-tinta/75">{it.texto}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .huella { transform: translateY(var(--off)) rotate(-12deg); }
+  :global(html.js) .huella-wrap[data-reveal] { transition-duration: .35s; transition-delay: calc(var(--i, 0) * 140ms); }
+  .item { transition: transform .3s var(--ease-rebote), box-shadow .3s; }
+  .item:hover { transform: translateY(-3px); box-shadow: 0 18px 30px -20px rgba(36,38,43,.4); }
+  .item:hover span:first-child { animation: meneo .5s ease-in-out; }
+  @keyframes meneo { 25% { transform: rotate(-10deg); } 75% { transform: rotate(10deg); } }
+
+  .foto-perro { transition: rotate .5s var(--ease-rebote), scale .5s var(--ease-rebote); }
+  .foto-perro:hover { rotate: 0deg; scale: 1.02; }
+  .globito {
+    position: absolute; top: -.8rem; right: -.4rem;
+    background: var(--color-turquesa); color: var(--color-tinta);
+    font: 800 italic 1.25rem/1 var(--font-display);
+    padding: .75rem 1rem; border-radius: 18px 18px 18px 4px; transform: rotate(6deg);
+    box-shadow: 0 10px 24px -10px rgba(0,0,0,.35);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .globito { animation: flotar 3.5s ease-in-out infinite; --rot: 6deg; }
+  }
+</style>

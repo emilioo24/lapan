@@ -1,0 +1,37 @@
+---
+import Icono from '../../../../shared/components/Icono.astro';
+import { RESTO_BASE, ALMACEN_URL, asset } from '../../../../shared/config.mjs';
+import { RESTO, ALMACEN } from '../../../../shared/negocio.mjs';
+const anio = new Date().getFullYear();
+---
+<footer class="sobre-oscuro relative overflow-hidden bg-grafito pt-16 pb-24 text-crema/85 sm:pb-16">
+  <img src={asset(RESTO_BASE, 'img/lapan-simbolo-dorado.svg')} alt="" aria-hidden="true"
+       class="pointer-events-none absolute -right-16 -bottom-24 w-80 opacity-[.06]" />
+  <div class="relative mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr] lg:px-8">
+    <div>
+      <img src={asset(RESTO_BASE, 'img/lapan-logo-dorado.svg')} alt="Lapan" width="150" height="55" class="h-14 w-auto" />
+      <p class="mt-4 max-w-sm">Restaurante, cafetería y panadería en Paraná, Entre Ríos. Del primer café a la última copa, todo hecho acá.</p>
+      <a href={ALMACEN_URL} class="btn btn-salvia mt-6">Pedí en el Almacén <Icono nombre="flecha" class="flecha" /></a>
+    </div>
+    <div>
+      <h2 class="font-sans text-sm font-bold tracking-wider text-dorado uppercase">Visitanos</h2>
+      <ul class="mt-4 grid gap-2">
+        <li>{RESTO.direccion}</li>
+        <li>{RESTO.horario.corto}</li>
+        <li>{RESTO.horario.cerrado}</li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="font-sans text-sm font-bold tracking-wider text-dorado uppercase">Seguinos</h2>
+      <ul class="mt-4 grid gap-2">
+        <li><a class="inline-flex items-center gap-2 hover:text-dorado" href={RESTO.instagram.url} target="_blank" rel="noopener"><Icono nombre="instagram" class="size-4" />{RESTO.instagram.usuario}</a></li>
+        <li><a class="inline-flex items-center gap-2 hover:text-dorado" href={ALMACEN.instagram.url} target="_blank" rel="noopener"><Icono nombre="instagram" class="size-4" />{ALMACEN.instagram.usuario}</a></li>
+        <li><a class="inline-flex items-center gap-2 hover:text-dorado" href={RESTO.whatsapp.url} target="_blank" rel="noopener"><Icono nombre="whatsapp" class="size-4" />{RESTO.whatsapp.numero}</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="relative mx-auto mt-12 flex max-w-7xl flex-col gap-2 border-t border-white/10 px-4 pt-6 text-sm text-crema/65 sm:flex-row sm:justify-between sm:px-6 lg:px-8">
+    <p>© {anio} Lapan · Paraná, Entre Ríos</p>
+    <p>Hecho con cariño en Paraná</p>
+  </div>
+</footer>

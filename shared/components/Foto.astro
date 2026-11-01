@@ -1,0 +1,28 @@
+---
+// Foto optimizada (public/img/fotos/<nombre>-600|1200.webp) con srcset.
+import { asset } from '../config.mjs';
+
+interface Props {
+  base: string;            // base del sitio (RESTO_BASE o ALMACEN_BASE)
+  nombre: string;          // ej: "pavlova"
+  alt: string;
+  sizes?: string;
+  class?: string;
+  eager?: boolean;
+  posicion?: string;       // object-position
+}
+const { base, nombre, alt, sizes = '(min-width: 1024px) 33vw, 90vw', class: clase = '', eager = false, posicion = 'center' } = Astro.props;
+const src = (w: number) => asset(base, `img/fotos/${nombre}-${w}.webp`);
+---
+<img
+  src={src(1200)}
+  srcset={`${src(600)} 600w, ${src(1200)} 1200w`}
+  sizes={sizes}
+  alt={alt}
+  width="1200" height="1500"
+  loading={eager ? 'eager' : 'lazy'}
+  fetchpriority={eager ? 'high' : 'auto'}
+  decoding="async"
+  class={clase}
+  style={`object-position:${posicion}`}
+/>

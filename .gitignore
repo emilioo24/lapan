@@ -1,0 +1,6 @@
+node_modules/
+dist/
+apps/*/dist/
+apps/*/.astro/
+.DS_Store
+capturas/

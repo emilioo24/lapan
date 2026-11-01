@@ -1,0 +1,131 @@
+---
+import Icono from '../../../../shared/components/Icono.astro';
+import Foto from '../../../../shared/components/Foto.astro';
+import { RESTO_BASE, ALMACEN_URL, asset } from '../../../../shared/config.mjs';
+import { RESTO } from '../../../../shared/negocio.mjs';
+
+const palabras = ['Del', 'primer', 'café', 'a', 'la', 'última', 'copa,', 'todo', 'hecho'];
+---
+<section class="hero sobre-oscuro relative overflow-hidden bg-grafito pt-24 pb-16 text-crema sm:pt-28 lg:pt-32 lg:pb-24">
+  <!-- decoración -->
+  <img src={asset(RESTO_BASE, 'img/lapan-simbolo-dorado.svg')} alt="" aria-hidden="true"
+       class="pointer-events-none absolute -top-10 -left-24 w-[28rem] max-w-none rotate-12 opacity-[.05] lg:w-[36rem]" />
+  <span class="punto bg-fucsia" style="top:22%;left:46%;--d:0s" aria-hidden="true"></span>
+  <span class="punto bg-turquesa" style="top:78%;left:6%;--d:1.2s" aria-hidden="true"></span>
+  <span class="punto bg-dorado" style="top:12%;right:8%;--d:2s" aria-hidden="true"></span>
+
+  <div class="relative mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:gap-10 lg:px-8">
+    <div>
+      <p class="sobretitulo entra text-dorado" style="--i:0">Restaurante · Cafetería · Panadería</p>
+
+      <h1 class="mt-5 text-[2.6rem] leading-[1.02] font-extrabold sm:text-6xl lg:text-[4.4rem]">
+        {palabras.map((p, i) => <><span class="palabra" style={`--i:${i + 1}`}>{p}</span>{' '}</>)}
+        <span class="palabra relative inline-block text-dorado italic" style={`--i:${palabras.length + 1}`}>
+          acá.
+          <svg class="subrayado" viewBox="0 0 120 14" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M3 9c22-6 52-8 78-5 12 1.4 24 3 36 1" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" pathLength="1" />
+          </svg>
+        </span>
+      </h1>
+
+      <p class="entra mt-6 max-w-xl text-lg leading-relaxed text-crema/85 sm:text-xl" style="--i:12">
+        Desayunos, brunch, almuerzos y cenas, y los panes y dulces de nuestra panadería.
+        Vení a San Lorenzo 9: abrimos de corrido, con el jardín esperándote.
+      </p>
+
+      <div class="entra mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap" style="--i:13">
+        <a href="#carta" class="btn btn-dorado">Ver la carta</a>
+        <a href={ALMACEN_URL} class="btn btn-salvia">Pedí en el Almacén <Icono nombre="flecha" class="flecha" /></a>
+      </div>
+
+      <ul class="entra mt-8 flex flex-wrap gap-2.5" style="--i:14" aria-label="Datos rápidos">
+        <li class="chip bg-grafito-2 text-crema ring-1 ring-white/10">
+          <Icono nombre="estrella" class="fill-dorado text-dorado" /> {RESTO.puntajes.google.texto} ★ en Google
+        </li>
+        <li class="chip bg-grafito-2 text-crema ring-1 ring-white/10">
+          <Icono nombre="reloj" class="text-dorado" /> {RESTO.horario.corto}
+        </li>
+        <li class="chip bg-grafito-2 text-crema ring-1 ring-white/10">
+          <span aria-hidden="true">🐾</span> Pet friendly
+        </li>
+      </ul>
+    </div>
+
+    <!-- Collage -->
+    <div class="collage relative mx-auto aspect-[1/1.02] w-full max-w-[34rem]" data-parallax="0.06">
+      <figure class="polaroid" style="--r:-7deg;--i:0;left:0;top:10%;width:56%">
+        <div class="marco"><Foto base={RESTO_BASE} nombre="brunch-huevo-palta" eager sizes="(min-width:1024px) 300px, 55vw"
+          alt="Plato de loza con huevo frito, palta, tomates cherry, repollo morado, aceitunas y albahaca" /></div>
+      </figure>
+      <figure class="polaroid" style="--r:6deg;--i:1;right:0;top:0;width:50%">
+        <div class="marco"><Foto base={RESTO_BASE} nombre="pavlova" eager sizes="(min-width:1024px) 270px, 50vw"
+          alt="Pavlova con crema, frutillas, frambuesas, arándanos y una flor comestible, en plato de loza azul" /></div>
+      </figure>
+      <figure class="polaroid" style="--r:-2deg;--i:2;left:30%;bottom:0;width:48%">
+        <div class="marco"><Foto base={RESTO_BASE} nombre="croissant-jamon-queso" sizes="(min-width:1024px) 260px, 48vw" posicion="50% 40%"
+          alt="Croissant de jamón y queso partido al medio, con el queso derretido" /></div>
+      </figure>
+
+      <!-- Sello "de corrido" -->
+      <div class="sello" aria-label="Abierto de corrido" role="img">
+        <svg viewBox="0 0 120 120" class="sello-anillo" aria-hidden="true">
+          <defs><path id="circulo-sello" d="M60 60m-45 0a45 45 0 1 1 90 0a45 45 0 1 1-90 0" /></defs>
+          <text><textPath href="#circulo-sello" startOffset="0">MAR A DOM · 8 A 00 H · SIN CORTES ·</textPath></text>
+        </svg>
+        <span class="sello-centro">de<br />corrido</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Entrada del texto */
+  .palabra { display: inline-block; }
+  @media (prefers-reduced-motion: no-preference) {
+    .palabra { animation: palabra .8s var(--ease-suave) both; animation-delay: calc(var(--i) * 70ms + 150ms); }
+    .entra { animation: sube .9s var(--ease-suave) both; animation-delay: calc(var(--i) * 70ms + 150ms); }
+    .subrayado path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: dibujar 1s var(--ease-suave) 1.1s forwards; }
+    .polaroid { animation: cae 1.1s var(--ease-rebote) backwards; animation-delay: calc(var(--i) * 160ms + 350ms); }
+    .sello { animation: sello-entra .9s var(--ease-rebote) 1.2s backwards; }
+    .sello-anillo { animation: girar 18s linear infinite; }
+    .punto { animation: flotar 6s ease-in-out infinite; animation-delay: var(--d); }
+  }
+  @keyframes palabra { from { opacity: 0; transform: translateY(.55em) rotate(4deg); filter: blur(6px); } }
+  @keyframes sube { from { opacity: 0; transform: translateY(18px); } }
+  @keyframes dibujar { to { stroke-dashoffset: 0; } }
+  @keyframes cae { from { opacity: 0; transform: translateY(60px) rotate(0deg) scale(.88); } }
+  @keyframes sello-entra { from { opacity: 0; transform: scale(.3) rotate(-90deg); } }
+
+  .subrayado { position: absolute; left: 0; right: 0; bottom: -.12em; width: 100%; height: .3em; overflow: visible; }
+
+  .collage { transform: translateY(var(--py, 0)); }
+  .polaroid {
+    position: absolute; margin: 0;
+    transform: rotate(var(--r));
+    transition: transform .5s var(--ease-rebote), z-index 0s;
+  }
+  .polaroid .marco {
+    background: #fff; padding: 7px; border-radius: 22px;
+    box-shadow: 0 24px 50px -18px rgba(0,0,0,.65), 0 2px 0 rgba(0,0,0,.08);
+  }
+  .polaroid img { aspect-ratio: 4/5; width: 100%; height: auto; object-fit: cover; border-radius: 16px; display: block; }
+  @media (hover: hover) {
+    .polaroid:hover { transform: rotate(0deg) scale(1.06); z-index: 5; }
+  }
+
+  .sello {
+    position: absolute; z-index: 6; left: -2%; bottom: 6%;
+    width: clamp(6.5rem, 26%, 8.5rem); aspect-ratio: 1;
+    border-radius: 999px; background: var(--color-fucsia); color: #fff;
+    display: grid; place-items: center;
+    box-shadow: 0 14px 30px -10px rgba(214, 51, 108, .7);
+  }
+  .sello-anillo { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .sello-anillo text { fill: #fff; font: 700 10.4px var(--font-sans); letter-spacing: .14em; }
+  .sello-centro {
+    font-family: var(--font-display); font-style: italic; font-weight: 800;
+    font-size: clamp(1rem, 4.2vw, 1.3rem); line-height: .95; text-align: center;
+  }
+
+  .punto { position: absolute; width: 10px; height: 10px; border-radius: 999px; opacity: .8; }
+</style>

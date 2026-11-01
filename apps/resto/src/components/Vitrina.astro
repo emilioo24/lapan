@@ -1,0 +1,62 @@
+---
+import Icono from '../../../../shared/components/Icono.astro';
+import Foto from '../../../../shared/components/Foto.astro';
+import { RESTO_BASE } from '../../../../shared/config.mjs';
+
+const piezas = [
+  { foto: 'pan-dulce-pistacho', nombre: 'Panes dulces', alt: 'Panes dulces con glaseado de pistacho y chocolate blanco' },
+  { foto: 'cookies', nombre: 'Cookies', alt: 'Bandeja de cookies con chocolate, avellanas, pistacho y frutos rojos' },
+  { foto: 'croissant-frutos-rojos', nombre: 'Croissants', alt: 'Croissant glaseado con frutos rojos' },
+  { foto: 'roscas', nombre: 'Roscas', alt: 'Dos roscas decoradas con crema, pistacho, coco y huevitos de chocolate' },
+  { foto: 'alfajor-10-anios', nombre: 'Alfajores', alt: 'Alfajor grande bañado en chocolate con un 10 dorado, cortado al medio' },
+];
+---
+<section id="vitrina" class="relative overflow-hidden bg-papel py-20 sm:py-24" aria-labelledby="titulo-vitrina">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+      <div class="max-w-2xl" data-reveal>
+        <p class="sobretitulo text-loza">Panes y dulces</p>
+        <h2 id="titulo-vitrina" class="mt-3 text-4xl font-extrabold text-tinta sm:text-5xl">
+          La vitrina <em class="text-loza">de hoy</em>
+        </h2>
+        <p class="mt-4 text-lg text-tinta/80">
+          Pan de queso, pan de semillas, scones y todo lo que sale del horno.
+          Para comer acá o para llevarte a casa.
+        </p>
+      </div>
+      <ul class="flex flex-wrap gap-2.5" data-reveal="der" aria-label="Opciones especiales">
+        <li class="chip bg-[#E3F0E9] text-[#1d5a37] ring-1 ring-[#1d5a37]/15"><Icono nombre="trigo" /> Opciones sin gluten</li>
+        <li class="chip bg-[#DDF1EE] text-[#17615a] ring-1 ring-[#17615a]/15"><Icono nombre="hoja" /> Opciones veganas</li>
+        <li class="chip bg-[#E6ECF7] text-loza ring-1 ring-loza/15"><Icono nombre="brote" /> Vegetariano</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- En el celular se desliza con el dedo; en desktop, fila de 5 -->
+  <ul class="vitrina mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-6 sm:px-6 lg:mx-auto lg:grid lg:max-w-7xl lg:grid-cols-5 lg:overflow-visible lg:px-8"
+      data-stagger tabindex="0" aria-label="Panes y dulces de la vitrina">
+    {piezas.map((p) => (
+      <li class="w-[68vw] max-w-[17rem] shrink-0 snap-center lg:w-auto lg:max-w-none" data-reveal="zoom">
+        <figure class="pieza group relative m-0 aspect-square overflow-hidden rounded-[22px] bg-crema">
+          <Foto base={RESTO_BASE} nombre={p.foto} alt={p.alt} sizes="(min-width:1024px) 240px, 68vw"
+                class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
+          <figcaption class="absolute inset-x-2 bottom-2 rounded-2xl bg-grafito/85 px-3.5 py-2 font-display text-lg font-semibold text-crema backdrop-blur-sm transition-transform duration-500 group-hover:-translate-y-1">
+            {p.nombre}
+          </figcaption>
+        </figure>
+      </li>
+    ))}
+  </ul>
+  <p class="px-4 text-center text-sm text-tinta/75 lg:hidden" aria-hidden="true">Deslizá para ver más →</p>
+</section>
+
+<style>
+  .vitrina { scrollbar-width: none; scroll-padding-inline: 1rem; }
+  .vitrina::-webkit-scrollbar { display: none; }
+  @media (min-width: 1024px) {
+    .vitrina > li:nth-child(odd) .pieza { transform: rotate(-1.5deg); }
+    .vitrina > li:nth-child(even) .pieza { transform: rotate(1.5deg) translateY(14px); }
+    .pieza { transition: transform .5s var(--ease-rebote); }
+    .vitrina > li .pieza:hover { transform: rotate(0) translateY(-6px); }
+  }
+</style>

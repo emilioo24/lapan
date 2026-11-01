@@ -1,0 +1,14 @@
+---
+// Bloque de color para cuando todavía no hay foto. Ver TODO en cada uso.
+import Icono from './Icono.astro';
+import { asset } from '../config.mjs';
+
+interface Props { base: string; icono: string; fondo: string; tinta: string; etiqueta: string; class?: string; }
+const { base, icono, fondo, tinta, etiqueta, class: clase = '' } = Astro.props;
+---
+<!-- TODO: foto -->
+<div class={`sin-foto ${clase}`} style={`background:${fondo};color:${tinta}`} role="img" aria-label={etiqueta}>
+  <img src={asset(base, 'img/lapan-simbolo-oliva.svg')} alt="" aria-hidden="true"
+       class="pointer-events-none absolute -right-6 -bottom-8 w-2/3 opacity-[.12] mix-blend-multiply" />
+  <Icono nombre={icono} class="icono-sin-foto relative" />
+</div>

@@ -1,0 +1,79 @@
+---
+import Icono from '../../../../shared/components/Icono.astro';
+import Foto from '../../../../shared/components/Foto.astro';
+import SinFoto from '../../../../shared/components/SinFoto.astro';
+import { ALMACEN_BASE } from '../../../../shared/config.mjs';
+import { ALMACEN } from '../../../../shared/negocio.mjs';
+
+const categorias = [
+  { titulo: 'Panes', etiqueta: 'Sin gluten', icono: 'trigo',
+    texto: 'Panes sin gluten para que nadie se quede sin su tostada.',
+    sinFoto: { fondo: '#E6EDD8', tinta: '#55602F' } },
+  { titulo: 'Pan dulce y tortas', etiqueta: 'Temporada', icono: 'torta',
+    texto: 'Pan dulce, también sin gluten, y tortas para las fiestas y fechas especiales.',
+    foto: 'pan-dulce-pistacho', alt: 'Panes dulces con glaseado de pistacho' },
+  { titulo: 'Hierbas y hebras', etiqueta: 'A granel', icono: 'hierbas',
+    texto: 'Hibisco y otras hierbas y hebras para tus infusiones, a granel.',
+    sinFoto: { fondo: '#F6D9E3', tinta: '#A11D4C' } },
+  { titulo: 'Huevos de gallinas libres', etiqueta: 'Frescos', icono: 'huevo',
+    texto: 'Huevos de gallinas libres, frescos para tu cocina de todos los días.',
+    sinFoto: { fondo: '#F3E6CC', tinta: '#7a5a22' } },
+  { titulo: 'Elaborados', etiqueta: 'Caseros', icono: 'canasta',
+    texto: 'Tortas invertidas, torta galesa y otras cosas ricas hechas por nosotros.',
+    foto: 'roscas', alt: 'Roscas caseras con crema, pistacho y coco' },
+  { titulo: 'Almacén', etiqueta: 'Selección', icono: 'frasco',
+    texto: 'Productos de almacén elegidos con el mismo cuidado que ponemos en la cocina.',
+    sinFoto: { fondo: '#DCE6F4', tinta: '#1F4E9C' } },
+];
+---
+<section id="productos" class="bg-crema-alm py-20 sm:py-24" aria-labelledby="titulo-productos">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl" data-reveal>
+      <p class="sobretitulo text-oliva">Productos</p>
+      <h2 id="titulo-productos" class="mt-3 text-4xl font-extrabold text-oliva-2 sm:text-5xl">
+        Lo que encontrás en el <em class="text-oliva">almacén</em>
+      </h2>
+      <!-- TODO: confirmar con el cliente el surtido y si hay lista de precios para sumar -->
+      <p class="mt-4 text-lg text-oliva-2/85">Elegí una categoría y escribinos: te contamos qué hay hoy y armamos tu pedido.</p>
+    </div>
+
+    <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-stagger>
+      {categorias.map((c) => (
+        <li data-reveal class="h-full">
+          <article class="cat group flex h-full flex-col overflow-hidden rounded-[22px] bg-white ring-1 ring-oliva/10" data-tilt>
+            <div class="relative aspect-[16/10] overflow-hidden">
+              {c.foto
+                ? <Foto base={ALMACEN_BASE} nombre={c.foto} alt={c.alt!} sizes="(min-width:1024px) 400px, (min-width:640px) 50vw, 92vw"
+                        class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.06]" />
+                : <SinFoto base={ALMACEN_BASE} icono={c.icono} fondo={c.sinFoto!.fondo} tinta={c.sinFoto!.tinta}
+                           etiqueta={`${c.titulo} (foto a confirmar)`} class="h-full w-full" />}
+              <span class="absolute top-3 left-3 rounded-full bg-oliva px-3 py-1 text-sm font-bold text-white shadow-sm">{c.etiqueta}</span>
+            </div>
+            <div class="flex flex-1 flex-col p-6">
+              <h3 class="text-2xl font-semibold text-oliva-2">{c.titulo}</h3>
+              <p class="mt-2 flex-1 leading-relaxed text-oliva-2/85">{c.texto}</p>
+              <a href={ALMACEN.whatsapp.url} target="_blank" rel="noopener"
+                 class="pedir mt-5 inline-flex items-center gap-2 self-start rounded-full py-1 font-bold text-oliva"
+                 aria-label={`Pedir ${c.titulo.toLowerCase()} por WhatsApp`}>
+                Pedir <Icono nombre="flecha" class="flecha size-4" />
+              </a>
+            </div>
+          </article>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .cat {
+    transform: perspective(900px) rotateX(var(--rx, 0)) rotateY(var(--ry, 0));
+    transition: transform .4s var(--ease-suave), box-shadow .4s;
+    box-shadow: 0 18px 40px -28px rgba(62,71,34,.45);
+  }
+  .cat:hover { box-shadow: 0 30px 50px -26px rgba(62,71,34,.55); }
+  .pedir { background-image: linear-gradient(currentColor, currentColor); background-size: 0 2px; background-repeat: no-repeat; background-position: 0 100%; transition: background-size .35s var(--ease-suave); }
+  .cat:hover .pedir, .pedir:hover { background-size: 100% 2px; }
+  .pedir .flecha { transition: transform .25s var(--ease-suave); }
+  .cat:hover .pedir .flecha { transform: translateX(4px); }
+</style>

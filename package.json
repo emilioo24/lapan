@@ -1,0 +1,27 @@
+{
+  "name": "lapan-sitios",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.10.1",
+  "scripts": {
+    "fotos": "node scripts/optimizar-fotos.mjs",
+    "dev": "pnpm --filter resto dev",
+    "dev:almacen": "pnpm --filter almacen dev",
+    "build": "node scripts/build.mjs demo",
+    "build:demo": "node scripts/build.mjs demo",
+    "build:produccion": "node scripts/build.mjs produccion",
+    "preview": "node scripts/preview.mjs",
+    "capturas": "node scripts/capturas.mjs capturas",
+    "accesibilidad": "node scripts/accesibilidad.mjs capturas"
+  },
+  "devDependencies": {
+    "axe-core": "^4.14.0",
+    "lucide-static": "^1.65.0",
+    "playwright-core": "^1.64.1",
+    "sharp": "^0.35.5",
+    "simple-icons": "^16.36.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

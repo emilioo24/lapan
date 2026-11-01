@@ -1,0 +1,31 @@
+---
+import Icono from '../../../../shared/components/Icono.astro';
+import { ALMACEN_BASE, RESTO_URL, asset } from '../../../../shared/config.mjs';
+import { ALMACEN } from '../../../../shared/negocio.mjs';
+---
+<header id="nav" class="fixed inset-x-0 top-0 z-50 bg-crema-alm/90 backdrop-blur-md transition-shadow duration-300">
+  <nav class="mx-auto flex max-w-7xl items-center gap-2 px-4 py-3 sm:gap-4 sm:px-6 lg:px-8" aria-label="Principal">
+    <a href={ALMACEN_BASE} class="mr-auto flex shrink-0 items-center gap-2" aria-label="Lapan Almacén, inicio">
+      <img src={asset(ALMACEN_BASE, 'img/lapan-logo-oliva.svg')} alt="Lapan" width="108" height="40" class="h-9 w-auto sm:h-10" />
+      <span class="rounded-full bg-oliva px-2.5 py-0.5 text-xs font-bold tracking-wide text-white sm:text-sm">Almacén</span>
+    </a>
+    <a href={RESTO_URL} class="volver inline-flex min-h-11 min-w-11 items-center justify-center gap-1.5 rounded-full px-2.5 py-2 sm:px-3 font-medium text-oliva-2 hover:bg-salvia/60">
+      <Icono nombre="flechaIzq" class="size-4" />
+      <span class="hidden sm:inline">Volver al restaurante</span><span class="sr-only sm:hidden">Volver al restaurante</span>
+    </a>
+    <a href={ALMACEN.whatsapp.url} target="_blank" rel="noopener" class="btn btn-oliva !min-h-11 !px-4 !py-2">
+      <Icono nombre="whatsapp" /> <span class="hidden min-[400px]:inline">Hacer pedido</span><span class="min-[400px]:hidden">Pedir</span>
+    </a>
+  </nav>
+</header>
+
+<style>
+  #nav.scrolled { box-shadow: 0 10px 30px -16px rgba(62,71,34,.45); }
+  .volver svg { transition: transform .25s var(--ease-suave); }
+  .volver:hover svg { transform: translateX(-4px); }
+</style>
+<script>
+  const nav = document.getElementById('nav')!;
+  const f = () => nav.classList.toggle('scrolled', scrollY > 10);
+  addEventListener('scroll', f, { passive: true }); f();
+</script>

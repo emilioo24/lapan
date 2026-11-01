@@ -1,0 +1,86 @@
+---
+import Icono from '../../../../shared/components/Icono.astro';
+import Foto from '../../../../shared/components/Foto.astro';
+import { RESTO_BASE } from '../../../../shared/config.mjs';
+import { RESTO } from '../../../../shared/negocio.mjs';
+
+const fechas = [
+  { nombre: 'Día de la Madre', emoji: '💐' },
+  { nombre: 'Día del Amigo', emoji: '🤝' },
+  { nombre: 'San Valentín', emoji: '💌' },
+  { nombre: 'Navidad', emoji: '🎄' },
+];
+---
+<section id="boxes" class="boxes relative overflow-hidden bg-fucsia [--foco:#fff] py-20 text-white sm:py-24" aria-labelledby="titulo-boxes">
+  <div class="confeti" aria-hidden="true"></div>
+
+  <div class="relative mx-auto grid max-w-7xl items-center gap-14 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
+    <div>
+      <p class="sobretitulo text-white" data-reveal>Boxes para regalar</p>
+      <h2 id="titulo-boxes" class="mt-3 text-4xl font-extrabold sm:text-5xl lg:text-6xl" data-reveal>
+        Regalá algo rico, <em>hecho acá</em>.
+      </h2>
+      <!-- TODO: confirmar con el cliente qué trae cada box y con cuánta anticipación se encargan -->
+      <p class="mt-5 max-w-xl text-lg leading-relaxed text-white" data-reveal>
+        Armamos boxes con nuestros panes y dulces para las fechas que importan.
+        Escribinos, contanos para quién es y lo dejamos listo para regalar.
+      </p>
+
+      <ul class="mt-8 grid grid-cols-2 gap-3 sm:max-w-lg" data-stagger aria-label="Fechas especiales">
+        {fechas.map((f) => (
+          <li data-reveal="giro" class="fecha flex items-center gap-3 rounded-2xl bg-white/12 px-4 py-3.5 ring-1 ring-white/30 backdrop-blur-sm">
+            <span class="text-2xl" aria-hidden="true">{f.emoji}</span>
+            <span class="font-display text-lg leading-tight font-semibold">{f.nombre}</span>
+          </li>
+        ))}
+      </ul>
+
+      <div class="mt-9" data-reveal>
+        <a href={RESTO.whatsapp.url} target="_blank" rel="noopener" class="btn btn-papel text-lg">
+          <Icono nombre="whatsapp" /> Encargá tu box por WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <div class="relative mx-auto w-[calc(100%-1rem)] max-w-md" data-reveal="zoom">
+      <div class="box-foto relative rotate-2 sm:rotate-3 rounded-[26px] bg-papel p-2.5 shadow-[0_30px_60px_-20px_rgba(80,0,30,.6)]">
+        <Foto base={RESTO_BASE} nombre="box-rosca" sizes="(min-width:1024px) 440px, 90vw"
+              alt="Caja kraft con moño dorado y etiqueta de Lapan, al lado de una rosca con crema y pistacho"
+              class="aspect-[4/5] w-full rounded-[18px] object-cover" />
+      </div>
+      <div class="etiqueta-regalo" aria-hidden="true">
+        <Icono nombre="regalo" class="size-6" />
+        <span>Para<br />regalar</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .confeti {
+    position: absolute; inset: 0; opacity: .16;
+    background-image:
+      radial-gradient(circle at 20% 30%, #fff 2px, transparent 2.5px),
+      radial-gradient(circle at 70% 80%, #fff 2px, transparent 2.5px),
+      radial-gradient(circle at 50% 50%, #FFFBF4 1.4px, transparent 2px);
+    background-size: 46px 46px, 64px 64px, 28px 28px;
+  }
+  .fecha { transition: transform .3s var(--ease-rebote), background-color .2s; }
+  .fecha:hover { transform: translateY(-3px) rotate(-1.5deg); background-color: rgb(255 255 255 / .2); }
+
+  .box-foto { transition: rotate .6s var(--ease-rebote), scale .6s var(--ease-rebote); }
+  .box-foto:hover { rotate: 0deg; scale: 1.02; }
+
+  .etiqueta-regalo {
+    position: absolute; top: -1.2rem; left: -.6rem;
+    display: flex; align-items: center; gap: .5rem;
+    background: var(--color-dorado); color: var(--color-tinta);
+    padding: .7rem 1rem; border-radius: 16px; transform: rotate(-8deg);
+    font-family: var(--font-display); font-weight: 800; font-style: italic; line-height: 1; font-size: 1.05rem;
+    box-shadow: 0 10px 24px -8px rgba(0,0,0,.35);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .etiqueta-regalo { animation: balanceo 4s ease-in-out infinite; transform-origin: 80% 0; }
+  }
+  @keyframes balanceo { 0%,100% { transform: rotate(-8deg); } 50% { transform: rotate(-2deg); } }
+</style>

@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import Categorias from '../components/Categorias.astro';
+import Pasos from '../components/Pasos.astro';
+import Horarios from '../components/Horarios.astro';
+import Footer from '../components/Footer.astro';
+import Guarda from '../../../../shared/components/Guarda.astro';
+import WhatsAppFlotante from '../../../../shared/components/WhatsAppFlotante.astro';
+import { ALMACEN } from '../../../../shared/negocio.mjs';
+---
+<Base
+  titulo="Lapan Almacén · Panes sin gluten, granel y delivery en Paraná"
+  descripcion="Panes y pan dulce sin gluten, hierbas y hebras a granel, huevos de gallinas libres y elaborados caseros. Pedí por WhatsApp: delivery de lunes a sábado en Paraná."
+>
+  <Navbar />
+  <main id="contenido">
+    <Hero />
+    <Guarda variante="oliva" />
+    <Categorias />
+    <Pasos />
+    <Horarios />
+  </main>
+  <Footer />
+  <WhatsAppFlotante url={ALMACEN.whatsapp.url} etiqueta="Hacé tu pedido por WhatsApp" />
+</Base>

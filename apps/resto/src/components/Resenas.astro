@@ -1,0 +1,67 @@
+---
+import Icono from '../../../../shared/components/Icono.astro';
+import Foto from '../../../../shared/components/Foto.astro';
+import { RESTO_BASE } from '../../../../shared/config.mjs';
+import { RESTO } from '../../../../shared/negocio.mjs';
+
+const { google, tripadvisor } = RESTO.puntajes;
+const tarjetas = [
+  { icono: 'google', valor: google.valor, dec: 1, texto: google.texto, estrella: true, fuente: 'en Google', detalle: google.opiniones },
+  { icono: 'tripadvisor', valor: tripadvisor.valor, dec: 1, texto: tripadvisor.texto, estrella: true, fuente: 'en Tripadvisor', detalle: tripadvisor.ranking },
+  { icono: 'instagram', valor: 55, dec: 0, texto: '55', sufijo: ' mil', fuente: 'seguidores en Instagram', detalle: RESTO.instagram.usuario, url: RESTO.instagram.url },
+];
+---
+<section id="resenas" class="sobre-oscuro relative overflow-hidden bg-grafito py-20 text-crema sm:py-24" aria-labelledby="titulo-resenas">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid items-center gap-10 lg:grid-cols-[1fr_auto]">
+      <div class="max-w-2xl">
+        <p class="sobretitulo text-dorado" data-reveal>Lo que dice la gente</p>
+        <h2 id="titulo-resenas" class="mt-3 text-4xl font-extrabold sm:text-5xl" data-reveal>
+          Diez años haciendo todo <em class="text-dorado">acá</em>.
+        </h2>
+        <p class="mt-4 text-lg text-crema/80" data-reveal>
+          Acabamos de cumplir 10 años y lo mejor que nos pasó fue la gente que vuelve.
+          Estos son los números que nos dejaron.
+        </p>
+      </div>
+      <div class="alfajor relative mx-auto w-44 sm:w-52" data-reveal="giro">
+        <div class="rotate-6 rounded-[22px] bg-white p-2 shadow-[0_24px_50px_-18px_rgba(0,0,0,.7)]">
+          <Foto base={RESTO_BASE} nombre="alfajor-10-anios" sizes="210px"
+                alt="Alfajor grande bañado en chocolate con un 10 dorado por los 10 años de Lapan"
+                class="aspect-square w-full rounded-[16px] object-cover" />
+        </div>
+        <span class="absolute -bottom-3 -left-4 rounded-full bg-fucsia px-3.5 py-1.5 font-display text-lg font-extrabold text-white italic shadow-lg">¡10 años!</span>
+      </div>
+    </div>
+
+    <ul class="mt-14 grid gap-5 md:grid-cols-3" data-stagger>
+      {tarjetas.map((t) => (
+        <li data-reveal class="tarjeta-num relative overflow-hidden rounded-[22px] bg-grafito-2 p-7 ring-1 ring-white/8">
+          <Icono nombre={t.icono} class="absolute top-6 right-6 size-6 text-crema/60" />
+          <p class="font-display text-[4.2rem] leading-none font-extrabold text-dorado sm:text-7xl">
+            <span data-contar={t.valor} data-decimales={t.dec}>{t.texto}</span>{t.sufijo}{t.estrella && <span class="ml-1 text-[.6em] align-[.35em]" aria-hidden="true">★</span>}
+          </p>
+          <p class="mt-3 text-lg font-bold text-crema">{t.fuente}</p>
+          {t.url
+            ? <a href={t.url} target="_blank" rel="noopener" class="mt-1 inline-block text-crema/75 underline decoration-dorado/50 underline-offset-4 hover:text-dorado">{t.detalle}</a>
+            : <p class="mt-1 text-crema/75">{t.detalle}</p>}
+        </li>
+      ))}
+    </ul>
+    <p class="mt-6 text-sm text-crema/60" data-reveal>
+      Puntajes públicos de Google y Tripadvisor. <!-- TODO: confirmar con el cliente que los puntajes estén al día antes de publicar -->
+    </p>
+  </div>
+</section>
+
+<style>
+  .tarjeta-num { transition: transform .35s var(--ease-rebote), background-color .3s; }
+  .tarjeta-num:hover { transform: translateY(-4px); background-color: #31363e; }
+  .tarjeta-num::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4px;
+    background: linear-gradient(90deg, var(--color-dorado), var(--color-fucsia), var(--color-loza), var(--color-turquesa));
+    transform: scaleX(0); transform-origin: left; transition: transform .6s var(--ease-suave);
+  }
+  .tarjeta-num:hover::after, .tarjeta-num.is-visible::after { transform: scaleX(1); }
+  .tarjeta-num.is-visible::after { transition-delay: calc(var(--i, 0) * 150ms + .5s); }
+</style>

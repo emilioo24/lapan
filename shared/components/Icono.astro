@@ -1,0 +1,34 @@
+---
+// Íconos inline: Lucide (trazo) + Simple Icons (marcas).
+import * as L from 'lucide-static';
+import { siWhatsapp, siInstagram, siGoogle, siTripadvisor } from 'simple-icons';
+
+interface Props { nombre: string; class?: string; }
+const { nombre, class: clase = '' } = Astro.props;
+
+const marcas: Record<string, { path: string }> = {
+  whatsapp: siWhatsapp, instagram: siInstagram, google: siGoogle, tripadvisor: siTripadvisor,
+};
+const lucide: Record<string, string> = {
+  wifi: L.Wifi, pata: L.PawPrint, accesible: L.Accessibility, arboles: L.Trees,
+  pin: L.MapPin, reloj: L.Clock, flecha: L.ArrowRight, flechaIzq: L.ArrowLeft, hoja: L.Leaf,
+  trigo: L.Wheat, huevo: L.Egg, camion: L.Truck, regalo: L.Gift, menu: L.Menu, cerrar: L.X,
+  telefono: L.Phone, cafe: L.Coffee, brote: L.Sprout, check: L.CheckCircle, moto: L.Bike,
+  tienda: L.Store, canasta: L.ShoppingBasket, croissant: L.Croissant, torta: L.CakeSlice,
+  sol: L.Sun, luna: L.Moon, cubiertos: L.Utensils, galleta: L.Cookie, sandwich: L.Sandwich,
+  corazon: L.Heart, copa: L.Wine, mensaje: L.MessageCircle, bolsa: L.ShoppingBag,
+  estrella: L.Star, taza: L.CupSoda, hierbas: L.Flower2, frasco: L.Package,
+};
+
+let html = '';
+if (marcas[nombre]) {
+  html = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" class="${clase}"><path d="${marcas[nombre].path}"/></svg>`;
+} else if (lucide[nombre]) {
+  html = lucide[nombre]
+    .replace(/\s(width|height)="24"/g, '')
+    .replace(/class="[^"]*"/, `class="${clase}" aria-hidden="true" focusable="false"`);
+} else {
+  throw new Error(`Ícono desconocido: ${nombre}`);
+}
+---
+<Fragment set:html={html} />
