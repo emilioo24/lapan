@@ -3,7 +3,13 @@ import Icono from '../../../../shared/components/Icono.astro';
 import Foto from '../../../../shared/components/Foto.astro';
 import SinFoto from '../../../../shared/components/SinFoto.astro';
 import { ALMACEN_BASE } from '../../../../shared/config.mjs';
-import { ALMACEN } from '../../../../shared/negocio.mjs';
+import { RUTAS } from '../tienda/rutas';
+
+// Categoría de la tienda a la que lleva cada tarjeta
+const EN_TIENDA: Record<string, string> = {
+  Panes: 'panes', 'Pan dulce y tortas': 'pan-dulce', 'Hierbas y hebras': 'hierbas',
+  'Huevos de gallinas libres': 'huevos', Elaborados: 'elaborados',
+};
 
 const categorias = [
   { titulo: 'Panes', etiqueta: 'Sin gluten', icono: 'trigo',
@@ -34,7 +40,7 @@ const categorias = [
         Lo que encontrás en el <em class="text-oliva">almacén</em>
       </h2>
       <!-- TODO: confirmar con el cliente el surtido y si hay lista de precios para sumar -->
-      <p class="mt-4 text-lg text-oliva-2/85">Elegí una categoría y escribinos: te contamos qué hay hoy y armamos tu pedido.</p>
+      <p class="mt-4 text-lg text-oliva-2/85">Elegí una categoría, sumá lo que quieras al pedido y te lo llevamos.</p>
     </div>
 
     <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-stagger>
@@ -52,9 +58,9 @@ const categorias = [
             <div class="flex flex-1 flex-col p-6">
               <h3 class="text-2xl font-semibold text-oliva-2">{c.titulo}</h3>
               <p class="mt-2 flex-1 leading-relaxed text-oliva-2/85">{c.texto}</p>
-              <a href={ALMACEN.whatsapp.url} target="_blank" rel="noopener"
+              <a href={EN_TIENDA[c.titulo] ? `${RUTAS.tienda}#cat-${EN_TIENDA[c.titulo]}` : RUTAS.tienda}
                  class="pedir mt-5 inline-flex items-center gap-2 self-start rounded-full py-1 font-bold text-oliva"
-                 aria-label={`Pedir ${c.titulo.toLowerCase()} por WhatsApp`}>
+                 aria-label={`Pedir ${c.titulo.toLowerCase()}`}>
                 Pedir <Icono nombre="flecha" class="flecha size-4" />
               </a>
             </div>

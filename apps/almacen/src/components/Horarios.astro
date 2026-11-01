@@ -2,6 +2,7 @@
 import Icono from '../../../../shared/components/Icono.astro';
 import { ALMACEN_BASE, RESTO_URL, asset } from '../../../../shared/config.mjs';
 import { ALMACEN, RESTO } from '../../../../shared/negocio.mjs';
+import { RUTAS } from '../tienda/rutas';
 ---
 <section id="horarios" class="bg-crema-alm py-20 sm:py-24" aria-labelledby="titulo-horarios">
   <div class="mx-auto grid max-w-7xl gap-6 px-4 sm:px-6 lg:grid-cols-2 lg:px-8" data-stagger>
@@ -32,7 +33,7 @@ import { ALMACEN, RESTO } from '../../../../shared/negocio.mjs';
           </div>
         </li>
       </ul>
-      <a href={ALMACEN.whatsapp.url} target="_blank" rel="noopener" class="btn btn-oliva mt-8"><Icono nombre="whatsapp" /> Hacer pedido</a>
+      <a href={RUTAS.tienda} class="btn btn-oliva mt-8"><Icono nombre="canasta" /> Hacer pedido</a>
     </article>
 
     <a data-reveal href={RESTO_URL} class="resto group sobre-oscuro relative flex flex-col justify-between overflow-hidden rounded-[22px] bg-grafito p-7 text-crema sm:p-9">

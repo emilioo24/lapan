@@ -1,0 +1,71 @@
+/* ─────────────────────────────────────────────────────────────
+   Tienda del almacén: diálogos, carrito y microanimaciones
+   ───────────────────────────────────────────────────────────── */
+
+/* Diálogo nativo: hoja que sube en el celular, ventana centrada en desktop */
+.hoja {
+  margin: auto auto 0; width: 100%; max-width: 100%; max-height: 92dvh;
+  padding: 0; border: 0; border-radius: 26px 26px 0 0; overflow: hidden;
+  background: #fff; color: var(--color-oliva-2);
+  box-shadow: 0 -20px 60px -20px rgba(31,34,39,.45);
+}
+@media (min-width: 640px) {
+  .hoja { margin: auto; max-width: 32rem; border-radius: 26px; }
+}
+.hoja::backdrop { background: rgb(31 34 39 / .55); backdrop-filter: blur(3px); }
+html:has(dialog[open]) { overflow: hidden; }
+
+.chips-tienda { scrollbar-width: none; }
+.chips-tienda::-webkit-scrollbar { display: none; }
+
+.boton-flotante { transition: transform .25s var(--ease-rebote); }
+.boton-flotante:hover { transform: translateY(-3px); }
+
+.girador { animation: girar .9s linear infinite; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .hoja[open] { animation: hoja-sube .4s var(--ease-suave); }
+  .hoja[open]::backdrop { animation: aparecer .3s ease; }
+  @media (min-width: 640px) { .hoja[open] { animation: hoja-zoom .35s var(--ease-rebote); } }
+
+  .contador-salto { animation: salto .45s var(--ease-rebote); }
+  .aviso { animation: aviso-entra .4s var(--ease-rebote); }
+  .barra-carrito { animation: hoja-sube .45s var(--ease-rebote); }
+  .aparece { animation: aparece .35s var(--ease-suave); }
+  .item-carrito { animation: aparece .3s var(--ease-suave); }
+  .procesando { animation: aparecer .25s ease; }
+  .check-ok { animation: check-ok .6s var(--ease-rebote); }
+  .paso-activo::after {
+    content: ""; position: absolute; inset: -5px; border-radius: 999px;
+    border: 2px solid var(--color-oliva); animation: onda 1.8s ease-out infinite;
+  }
+  .moto-anda { animation: moto 0.5s ease-in-out infinite alternate; }
+  .boton-flotante { animation: hoja-sube .6s var(--ease-rebote) .4s backwards; }
+  .tarjeta-producto:active { transform: scale(.985); }
+}
+
+/* Confeti de la pantalla de confirmación */
+.confeti-ok { position: absolute; inset: 0; pointer-events: none; }
+.confeti-ok span {
+  position: absolute; top: -12px; left: calc(var(--i) * 7.2% + 2%);
+  width: 8px; height: 14px; border-radius: 2px; opacity: 0;
+  background: var(--color-salvia);
+}
+.confeti-ok span:nth-child(3n) { background: var(--color-fucsia); }
+.confeti-ok span:nth-child(3n+1) { background: var(--color-dorado); }
+@media (prefers-reduced-motion: no-preference) {
+  .confeti-ok span { animation: confeti 2.4s ease-in calc(var(--i) * 90ms) 1 forwards; }
+}
+
+@keyframes hoja-sube { from { transform: translateY(60px); opacity: 0; } }
+@keyframes hoja-zoom { from { transform: scale(.94); opacity: 0; } }
+@keyframes aparecer { from { opacity: 0; } }
+@keyframes aparece { from { opacity: 0; transform: translateY(-6px); } }
+@keyframes salto { 0% { transform: scale(.4); } 60% { transform: scale(1.25); } }
+@keyframes aviso-entra { from { opacity: 0; transform: translateY(-14px) scale(.95); } }
+@keyframes check-ok { 0% { transform: scale(0) rotate(-45deg); } 70% { transform: scale(1.15) rotate(5deg); } }
+@keyframes moto { from { transform: translateY(0) rotate(-3deg); } to { transform: translateY(-3px) rotate(3deg); } }
+@keyframes confeti {
+  0% { opacity: 1; transform: translateY(0) rotate(0); }
+  100% { opacity: 0; transform: translateY(260px) rotate(540deg); }
+}

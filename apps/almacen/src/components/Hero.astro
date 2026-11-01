@@ -2,7 +2,7 @@
 import Icono from '../../../../shared/components/Icono.astro';
 import Foto from '../../../../shared/components/Foto.astro';
 import { ALMACEN_BASE, asset } from '../../../../shared/config.mjs';
-import { ALMACEN } from '../../../../shared/negocio.mjs';
+import { RUTAS } from '../tienda/rutas';
 
 const palabras = ['Lo', 'bueno', 'de', 'Lapan,', 'directo'];
 ---
@@ -20,10 +20,10 @@ const palabras = ['Lo', 'bueno', 'de', 'Lapan,', 'directo'];
       </h1>
       <p class="entra mt-6 max-w-xl text-lg leading-relaxed text-oliva-2 sm:text-xl" style="--i:9">
         Panes sin gluten, hierbas y hebras a granel, huevos de gallinas libres y elaborados caseros.
-        Pedís por WhatsApp y te lo llevamos a tu casa.
+        Elegís online, pagás como prefieras y te lo llevamos a tu casa.
       </p>
       <div class="entra mt-8 flex flex-col gap-3 sm:flex-row" style="--i:10">
-        <a href={ALMACEN.whatsapp.url} target="_blank" rel="noopener" class="btn btn-oliva"><Icono nombre="whatsapp" /> Pedí por WhatsApp</a>
+        <a href={RUTAS.tienda} class="btn btn-oliva"><Icono nombre="canasta" /> Hacer mi pedido</a>
         <a href="#productos" class="btn btn-borde text-oliva-2 hover:bg-oliva-2 hover:text-salvia">Ver productos <Icono nombre="flecha" class="flecha rotate-90" /></a>
       </div>
       <ul class="entra mt-8 flex flex-wrap gap-2.5" style="--i:11" aria-label="Lo que ofrecemos">

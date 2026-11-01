@@ -1,0 +1,15 @@
+---
+import Base from '../../layouts/Base.astro';
+import Navbar from '../../components/Navbar.astro';
+import Checkout from '../../tienda/Checkout';
+import { ALMACEN_BASE } from '../../../../../shared/config.mjs';
+import { RUTAS } from '../../tienda/rutas';
+---
+<Base titulo="Finalizá tu pedido · Lapan Almacén" descripcion="Elegí cómo recibís tu pedido, cuándo y cómo pagás." indexar={false}>
+  <Navbar sinBoton />
+  <main id="contenido">
+    <Checkout client:only="preact" base={ALMACEN_BASE} tiendaUrl={RUTAS.tienda} seguimientoUrl={RUTAS.seguimiento}>
+      <div slot="fallback" class="min-h-[70vh]"></div>
+    </Checkout>
+  </main>
+</Base>

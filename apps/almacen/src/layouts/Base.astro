@@ -3,14 +3,15 @@ import '../styles/global.css';
 import Seo from '../../../../shared/components/Seo.astro';
 import { ALMACEN_BASE, ALMACEN_ORIGIN } from '../../../../shared/config.mjs';
 
-interface Props { titulo: string; descripcion: string; }
-const { titulo, descripcion } = Astro.props;
+interface Props { titulo: string; descripcion: string; indexar?: boolean; }
+const { titulo, descripcion, indexar = true } = Astro.props;
 ---
 <!doctype html>
 <html lang="es-AR">
   <head>
     <Seo base={ALMACEN_BASE} origen={ALMACEN_ORIGIN} titulo={titulo} descripcion={descripcion}
          imagen="img/og-almacen.jpg" colorTema="#CDDCB5" />
+    {!indexar && <meta name="robots" content="noindex" />}
   </head>
   <body class="bg-crema-alm text-oliva-2 [--foco:#3E4722]">
     <a href="#contenido" class="saltar-al-contenido">Saltar al contenido</a>

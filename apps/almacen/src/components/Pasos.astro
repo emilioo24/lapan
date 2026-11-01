@@ -1,11 +1,12 @@
 ---
 import Icono from '../../../../shared/components/Icono.astro';
 import { ALMACEN } from '../../../../shared/negocio.mjs';
+import { RUTAS } from '../tienda/rutas';
 
 // TODO: confirmar con el cliente cómo se paga y si el delivery tiene costo o zona de cobertura.
 const pasos = [
-  { icono: 'mensaje', titulo: 'Escribinos', texto: 'Mandanos por WhatsApp lo que querés y tu dirección.' },
-  { icono: 'check', titulo: 'Confirmamos', texto: 'Te confirmamos qué hay, el total y el horario de entrega.' },
+  { icono: 'canasta', titulo: 'Elegí', texto: 'Armá tu pedido con lo que quieras del almacén.' },
+  { icono: 'check', titulo: 'Confirmá', texto: 'Elegí día y horario, y pagá online o al recibir.' },
   { icono: 'moto', titulo: 'Te lo llevamos', texto: `Lo recibís en tu casa. Delivery ${ALMACEN.delivery.toLowerCase()}.` },
 ];
 ---
@@ -33,7 +34,7 @@ const pasos = [
     </ol>
 
     <div class="mt-14 text-center" data-reveal>
-      <a href={ALMACEN.whatsapp.url} target="_blank" rel="noopener" class="btn btn-salvia text-lg"><Icono nombre="whatsapp" /> Empezá tu pedido</a>
+      <a href={RUTAS.tienda} class="btn btn-salvia text-lg"><Icono nombre="canasta" /> Empezá tu pedido</a>
     </div>
   </div>
 </section>

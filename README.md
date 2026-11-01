@@ -43,6 +43,38 @@ Otros comandos:
 - `pnpm capturas`: capturas a 375 px y 1440 px de las dos páginas, guardadas en `capturas/`. Requiere tener `pnpm preview` corriendo.
 - `pnpm accesibilidad`: auditoría WCAG AA con axe-core. También requiere `pnpm preview` corriendo.
 
+## Tienda online del almacén (demo)
+
+Los pedidos del almacén ya no van por WhatsApp. Se hacen desde una tienda propia, con un flujo parecido al de las apps de delivery:
+
+| Paso | Ruta | Qué hace |
+|---|---|---|
+| Tienda | `/almacen/pedir/` | Buscador, categorías que siguen el scroll, "Los más pedidos" y ficha de producto con presentación, cantidad y aclaraciones. Carrito lateral en desktop, barra inferior en el celular y aviso de cuánto falta para el envío gratis. |
+| Checkout | `/almacen/pedir/finalizar/` | Delivery o retiro, dirección, "lo antes posible" o día y franja (lunes a sábado, 9–13 y 16–20 h, en hora de Paraná), datos de contacto (opción de recordarlos), forma de pago (Mercado Pago, transferencia o efectivo con cálculo del vuelto), aclaraciones y validación de cada campo. |
+| Seguimiento | `/almacen/pedir/seguimiento/` | Número de pedido, estado que avanza (recibido → preparando → en camino → entregado), alias para copiar si paga por transferencia y detalle completo. |
+
+El código está en `apps/almacen/src/tienda/`, hecho con islas de **Preact** (unos 30 KB de JS comprimido):
+
+- `catalogo.ts`: productos, presentaciones, **precios de ejemplo**, costo de envío, formas de pago y franjas horarias.
+- `estado.ts`: carrito, horarios y pedido. Todo se guarda en `localStorage`.
+- `Tienda.tsx`, `Checkout.tsx`, `Seguimiento.tsx` y `BotonPedido.tsx`: las pantallas, más el botón con el contador de productos.
+
+**Qué es simulado en la demo:** el pago (Mercado Pago muestra "Pago aprobado" sin cobrar), el envío del pedido al almacén y el avance del estado. Para pasarlo a producción hace falta:
+
+1. Un backend que reciba el pedido. Puede ser una función serverless con una base de datos, o un servicio de e-commerce.
+2. La integración real de Mercado Pago (Checkout Pro) y el alias real para transferencias.
+3. Un panel o aviso para el almacén (mail, Telegram o WhatsApp Business API), desde donde también se actualice el estado del pedido.
+4. Precios, stock y zona de cobertura reales.
+
+En `Checkout.tsx`, la función `confirmar()` marca el lugar exacto donde va la llamada al backend.
+
+Pruebas automáticas (con `pnpm preview` corriendo):
+
+```bash
+pnpm prueba:compra     # hace una compra completa y guarda capturas en capturas/
+pnpm accesibilidad     # WCAG AA en todas las páginas, incluida la tienda
+```
+
 ## URLs cruzadas
 
 Se configuran **solo** en [`shared/config.mjs`](shared/config.mjs) y se eligen con variables de entorno en el build:
@@ -114,8 +146,8 @@ Están marcados en el código con `TODO`:
 - Horario de cada momento del día (desayuno, brunch, etc.).
 - Fechas exactas del horario de invierno (el indicador "Abierto ahora" asume del 21/6 al 21/9).
 - Qué trae cada box y con cuánta anticipación se encarga.
-- Dirección del almacén, formas de pago y zona o costo de delivery.
-- Surtido del almacén y si hay lista de precios.
+- Dirección del almacén, formas de pago, alias para transferencias y zona o costo de delivery.
+- **Tienda:** productos, presentaciones y precios reales (hoy son de ejemplo, en `apps/almacen/src/tienda/catalogo.ts`), y si conviene un pedido mínimo.
 - Que los puntajes de Google y Tripadvisor estén al día antes de publicar.
 
 ## Accesibilidad y rendimiento

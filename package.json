@@ -12,7 +12,8 @@
     "build:produccion": "node scripts/build.mjs produccion",
     "preview": "node scripts/preview.mjs",
     "capturas": "node scripts/capturas.mjs capturas",
-    "accesibilidad": "node scripts/accesibilidad.mjs capturas"
+    "accesibilidad": "node scripts/accesibilidad.mjs capturas && node scripts/accesibilidad-tienda.mjs",
+    "prueba:compra": "node scripts/prueba-compra.mjs capturas"
   },
   "devDependencies": {
     "axe-core": "^4.14.0",

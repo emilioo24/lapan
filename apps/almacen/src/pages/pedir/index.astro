@@ -1,0 +1,18 @@
+---
+import Base from '../../layouts/Base.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import Tienda from '../../tienda/Tienda';
+import { ALMACEN_BASE } from '../../../../../shared/config.mjs';
+import { RUTAS } from '../../tienda/rutas';
+---
+<Base
+  titulo="Hacé tu pedido · Lapan Almacén"
+  descripcion="Elegí panes sin gluten, pan dulce, hierbas a granel, huevos de gallinas libres y elaborados caseros. Pagás online o al recibir y te lo llevamos en Paraná."
+>
+  <Navbar />
+  <main id="contenido">
+    <Tienda client:load base={ALMACEN_BASE} checkoutUrl={RUTAS.finalizar} />
+  </main>
+  <Footer />
+</Base>

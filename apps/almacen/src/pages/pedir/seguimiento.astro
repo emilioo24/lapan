@@ -1,0 +1,18 @@
+---
+import Base from '../../layouts/Base.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import Seguimiento from '../../tienda/Seguimiento';
+import { ALMACEN_BASE } from '../../../../../shared/config.mjs';
+import { ALMACEN } from '../../../../../shared/negocio.mjs';
+import { RUTAS } from '../../tienda/rutas';
+---
+<Base titulo="Tu pedido · Lapan Almacén" descripcion="Seguí el estado de tu pedido del almacén." indexar={false}>
+  <Navbar />
+  <main id="contenido">
+    <Seguimiento client:only="preact" base={ALMACEN_BASE} tiendaUrl={RUTAS.tienda} whatsappUrl={ALMACEN.whatsapp.url}>
+      <div slot="fallback" class="min-h-[70vh]"></div>
+    </Seguimiento>
+  </main>
+  <Footer />
+</Base>

@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
+import preact from '@astrojs/preact';
 import { ALMACEN_BASE, ALMACEN_ORIGIN } from '../../shared/config.mjs';
 
 export default defineConfig({
@@ -10,6 +11,7 @@ export default defineConfig({
   publicDir: '../../public',
   outDir: './dist',
   trailingSlash: 'ignore',
+  integrations: [preact()],
   build: { inlineStylesheets: 'auto' },
   vite: {
     plugins: [tailwindcss()],

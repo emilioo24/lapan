@@ -2,6 +2,7 @@
 import Icono from '../../../../shared/components/Icono.astro';
 import { ALMACEN_BASE, RESTO_URL, asset } from '../../../../shared/config.mjs';
 import { ALMACEN, RESTO } from '../../../../shared/negocio.mjs';
+import { RUTAS } from '../tienda/rutas';
 const anio = new Date().getFullYear();
 ---
 <footer class="relative overflow-hidden bg-oliva-2 pt-16 pb-24 text-crema-alm/90 [--foco:#CDDCB5] sm:pb-16">
@@ -23,7 +24,8 @@ const anio = new Date().getFullYear();
     <div>
       <h2 class="font-sans text-sm font-bold tracking-wider text-salvia uppercase">Lapan</h2>
       <ul class="mt-4 grid gap-2">
-        <li><a class="inline-flex items-center gap-2 hover:text-salvia" href={ALMACEN.whatsapp.url} target="_blank" rel="noopener"><Icono nombre="whatsapp" class="size-4" />Pedidos por WhatsApp</a></li>
+        <li><a class="inline-flex items-center gap-2 hover:text-salvia" href={RUTAS.tienda}><Icono nombre="canasta" class="size-4" />Hacer un pedido</a></li>
+        <li><a class="inline-flex items-center gap-2 hover:text-salvia" href={ALMACEN.whatsapp.url} target="_blank" rel="noopener"><Icono nombre="whatsapp" class="size-4" />Consultas por WhatsApp</a></li>
         <li><a class="inline-flex items-center gap-2 hover:text-salvia" href={ALMACEN.instagram.url} target="_blank" rel="noopener"><Icono nombre="instagram" class="size-4" />{ALMACEN.instagram.usuario}</a></li>
         <li><a class="inline-flex items-center gap-2 hover:text-salvia" href={RESTO.instagram.url} target="_blank" rel="noopener"><Icono nombre="instagram" class="size-4" />{RESTO.instagram.usuario}</a></li>
         <li><a class="inline-flex items-center gap-2 hover:text-salvia" href={RESTO_URL}><Icono nombre="flechaIzq" class="size-4" />Volver al restaurante</a></li>

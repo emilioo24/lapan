@@ -1,4 +1,5 @@
 @import "tailwindcss";
 @import "../../../../shared/tokens.css";
 @import "../../../../shared/base.css";
+@import "./tienda.css";
 @source "../../../../shared";
